@@ -1,0 +1,53 @@
+.inspire {
+    background-color: yellow;
+    width: 100px;
+}
+
+.pics-1 {
+    border-radius: 120px;
+    margin-right: 300px;
+    margin-top: 10px;
+    width: 500px;
+}
+
+.upper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.titles {
+    margin-left: 100px;
+    margin-top: 60px;
+}
+
+Button {
+    margin-top: 40px;
+}
+
+.bottom {
+    display: flex;
+    margin-left: 100px;
+}
+
+.background {
+    width: 250px;
+    height: 300px;
+    border: none;
+    box-shadow: 1px 1px 7px 3px #7e7e7e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 40px;
+}
+
+.profile {
+    width: 150px;
+    border-radius: 75px;
+    margin-top: -130px;
+}
+
+.socials {
+    display: flex;
+}

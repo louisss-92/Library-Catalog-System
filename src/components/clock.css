@@ -1,0 +1,29 @@
+/* clock.css */
+.clock-container {
+  
+  color: #ffc683; /* white text */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.clock-time {
+  display: flex;
+  align-items: baseline;
+  font-size: 2rem; /* larger font for time */
+  font-weight: 600;
+}
+
+.clock-element {
+  margin: 0 4px;
+}
+
+.clock-colon {
+  margin: 0 2px;
+  color: #ffc683; /* lighter color for colons */
+}
+
+.clock-period {
+  font-size: 1.2rem; /* smaller font size for AM/PM */
+  margin-left: 8px;
+  font-weight: 500;
+  color: #ffc683; /* softer color for period */
+}
