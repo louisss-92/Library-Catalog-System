@@ -1,5 +1,4 @@
-import React from 'react';
-
+import PropTypes from 'prop-types';
 function Body({ children }) {
   return (
     <div className="body">
@@ -8,4 +7,7 @@ function Body({ children }) {
   );
 }
 
+Body.propTypes = {
+  children: PropTypes.func.isRequired,
+};
 export default Body;

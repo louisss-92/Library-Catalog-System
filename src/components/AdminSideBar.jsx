@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from "react";
 import {
   IconLayoutSidebarLeftCollapse,
@@ -33,7 +34,9 @@ function Sidebar({ onSelectPage }) {
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
-
+  Sidebar.propTypes = {
+    onSelectPage: PropTypes.func.isRequired,
+  };
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <button onClick={toggleSidebar} className="collapse-btn">
@@ -264,5 +267,6 @@ function Sidebar({ onSelectPage }) {
     </div>
   );
 }
+
 
 export default Sidebar;
