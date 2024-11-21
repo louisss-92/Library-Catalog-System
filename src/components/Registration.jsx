@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Modal,
   ModalContent,
@@ -18,7 +18,7 @@ import {
   TableCell,
   Pagination,
 } from "@nextui-org/react";
-import { CalendarDate, parseDate } from "@internationalized/date";
+import { CalendarDate } from "@internationalized/date";
 import { CalendarIcon } from "./ui/CalendarIcon";
 import { TimeInput } from "@nextui-org/react";
 import { ClockCircleLinearIcon } from "./ui/ClockCircleLinearIcon";
@@ -129,7 +129,6 @@ function Registration() {
       setAge("");
       setYearLevel("");
       setCourse("");
-      fetchData();
     } catch (error) {
       console.error("Error submitting form:", error);
     }
