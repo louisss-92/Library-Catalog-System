@@ -96,43 +96,63 @@ function Registration() {
     const now = new Date();
     const currentTime = now.toTimeString().split(" ")[0];
     const currentDate = now.toISOString().split("T")[0];
-
+  
     const data = {
-      Name: name,
-      Gender: gender,
-      Age: parseInt(age, 10),
-      Dept: course,
+      AttendeeID: "",
+      Name: name || "",
+      Gender: gender || "",
+      Age: age || "",
+      Dept: course || "",
       TimeIn: currentTime,
-      TimeOut: currentTime,
       Date: currentDate,
-      YearLevel: parseInt(yearLevel, 10),
+      YearLevel: yearLevel || "",
+      purpose: purpose || ""
     };
-
+  
     console.log("Data to be submitted:", data);
-
+  
+    // Custom serializer to handle circular references
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return;
+          }
+          seen.add(value);
+        }
+        return value;
+      };
+    };
+  
     try {
-      const response = await fetch("http://localhost/API/register.php", {
+      const response = await fetch("http://localhost/API/Attendance.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data, getCircularReplacer()),
       });
-
+  
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-
+  
+      console.log("Response:", await response.json());
+  
       onClose();
       setName("");
       setGender("");
       setAge("");
-      setYearLevel("");
       setCourse("");
+      setYearLevel("");
+      setPurpose("");
+  
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
+  
 
   return (
     <div className="p-2">
