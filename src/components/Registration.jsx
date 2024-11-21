@@ -24,8 +24,6 @@ import { TimeInput } from "@nextui-org/react";
 import { ClockCircleLinearIcon } from "./ui/ClockCircleLinearIcon";
 import { Time } from "@internationalized/date";
 import { Input } from "@nextui-org/react";
-import { Select, SelectItem } from "@nextui-org/react";
-import { genders, yearlevels, courses } from "./data.js";
 import { DateInput } from "@nextui-org/react";
 import "./reg.css";
 import DateDisplay from "./DateDisplay.jsx";
@@ -96,7 +94,7 @@ function Registration() {
     const now = new Date();
     const currentTime = now.toTimeString().split(" ")[0];
     const currentDate = now.toISOString().split("T")[0];
-  
+
     const data = {
       AttendeeID: "",
       Name: name || "",
@@ -106,11 +104,11 @@ function Registration() {
       TimeIn: currentTime,
       Date: currentDate,
       YearLevel: yearLevel || "",
-      purpose: purpose || ""
+      purpose: purpose || "",
     };
-  
+
     console.log("Data to be submitted:", data);
-  
+
     // Custom serializer to handle circular references
     const getCircularReplacer = () => {
       const seen = new WeakSet();
@@ -124,7 +122,7 @@ function Registration() {
         return value;
       };
     };
-  
+
     try {
       const response = await fetch("http://localhost/API/Attendance.php", {
         method: "POST",
@@ -133,13 +131,13 @@ function Registration() {
         },
         body: JSON.stringify(data, getCircularReplacer()),
       });
-  
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       console.log("Response:", await response.json());
-  
+
       onClose();
       setName("");
       setGender("");
@@ -147,12 +145,10 @@ function Registration() {
       setCourse("");
       setYearLevel("");
       setPurpose("");
-  
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-  
 
   return (
     <div className="p-2">
@@ -283,54 +279,37 @@ function Registration() {
 
                   {/* Gender and Year Level */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    {/* Gender */}
-                    <Select
-                      isRequired
-                      label="Gender"
-                      placeholder="Select gender"
-                      value={gender}
-                      onChange={(value) => setGender(value)} // Directly setting only the selected value
-                      className="w-full"
-                    >
-                      {genders.map((gender) => (
-                        <SelectItem key={gender.key} value={gender.label}>
-                          {gender.label}
-                        </SelectItem>
-                      ))}
-                    </Select>
+                  <Input
+                    isRequired
+                    type="text"
+                    label="Gender"
+                    placeholder="Enter your gender(Male, Female, LGBT+...)"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="w-full mb-4"
+                  />
 
-                    {/* Year Level */}
-                    <Select
-                      isRequired
-                      label="Year Level"
-                      placeholder="Select year level"
-                      value={yearLevel}
-                      onChange={(value) => setYearLevel(value)} // Directly setting only the selected value
-                      className="w-full"
-                    >
-                      {yearlevels.map((yearlevel) => (
-                        <SelectItem key={yearlevel.key} value={yearlevel.label}>
-                          {yearlevel.label}
-                        </SelectItem>
-                      ))}
-                    </Select>
+<Input
+                    isRequired
+                    type="text"
+                    label="Year Level"
+                    placeholder="Enter your year level (1st, 2nd, 3rd, 4th)"
+                    value={yearLevel}
+                    onChange={(e) => setYearLevel(e.target.value)}
+                    className="w-full mb-4"
+                  />
                   </div>
 
                   {/* Course */}
-                  <Select
+                  <Input
                     isRequired
+                    type="text"
                     label="Course"
-                    placeholder="Select course"
+                    placeholder="Enter course(Infotech, Education...)"
                     value={course}
-                    onChange={(value) => setCourse(value)} // Directly setting only the selected value
+                    onChange={(e) => setCourse(e.target.value)}
                     className="w-full mb-4"
-                  >
-                    {courses.map((course) => (
-                      <SelectItem key={course.key} value={course.label}>
-                        {course.label}
-                      </SelectItem>
-                    ))}
-                  </Select>
+                  />
 
                   {/* Purpose */}
                   <Input
@@ -408,7 +387,7 @@ function Registration() {
           <TableColumn className="font-serif text-lg" key="Dept" width="20%">
             DEPARTMENT
           </TableColumn>
-          <TableColumn className="font-serif text-lg" key="Purpose" width="20%">
+          <TableColumn className="font-serif text-lg" key="purpose" width="20%">
             PURPOSE
           </TableColumn>
           <TableColumn className="font-serif text-lg" key="TimeIn" width="15%">

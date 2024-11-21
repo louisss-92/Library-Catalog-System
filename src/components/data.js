@@ -547,7 +547,7 @@ export const courses = [
     key: "educE",
     label: "Bachelor of Science in Secondary Education major in English",
   },
-  { key: "agri", label: "Bachelor of Science in A" },
+  { key: "agri", label: "Bachelor of Science in Agriculture" },
 ];
 
 /////////////////////////////////////////////////////
