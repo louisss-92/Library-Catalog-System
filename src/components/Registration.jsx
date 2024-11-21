@@ -89,6 +89,42 @@ function Registration() {
     onOpen();
   };
 
+  //handle submission for timeout
+const handleTimeout = async (attendeeID) => {
+  const now = new Date();
+  const currentTime = now.toTimeString().split(" ")[0]; // Get current time (HH:MM:SS)
+
+  const data = {
+    AttendeeID: attendeeID,
+    TimeOut: currentTime,
+  };
+
+  try {
+    const response = await fetch("http://localhost/API/updateTimeOut.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const result = await response.json();
+    if (result.success) {
+      console.log("TimeOut updated successfully");
+    } else {
+      console.error("Failed to update TimeOut:", result.error);
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error);
+  }
+};
+
+
+
   // Handle form submission
   const handleSubmit = async () => {
     const now = new Date();
@@ -106,8 +142,6 @@ function Registration() {
       YearLevel: yearLevel || "",
       purpose: purpose || "",
     };
-
-    console.log("Data to be submitted:", data);
 
     // Custom serializer to handle circular references
     const getCircularReplacer = () => {
@@ -279,25 +313,25 @@ function Registration() {
 
                   {/* Gender and Year Level */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <Input
-                    isRequired
-                    type="text"
-                    label="Gender"
-                    placeholder="Enter your gender(Male, Female, LGBT+...)"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    className="w-full mb-4"
-                  />
+                    <Input
+                      isRequired
+                      type="text"
+                      label="Gender"
+                      placeholder="Enter your gender(Male, Female, LGBT+...)"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="w-full mb-4"
+                    />
 
-<Input
-                    isRequired
-                    type="text"
-                    label="Year Level"
-                    placeholder="Enter your year level (1st, 2nd, 3rd, 4th)"
-                    value={yearLevel}
-                    onChange={(e) => setYearLevel(e.target.value)}
-                    className="w-full mb-4"
-                  />
+                    <Input
+                      isRequired
+                      type="text"
+                      label="Year Level"
+                      placeholder="Enter your year level (1st, 2nd, 3rd, 4th)"
+                      value={yearLevel}
+                      onChange={(e) => setYearLevel(e.target.value)}
+                      className="w-full mb-4"
+                    />
                   </div>
 
                   {/* Course */}
@@ -398,37 +432,38 @@ function Registration() {
           </TableColumn>
         </TableHeader>
         <TableBody items={paginatedItems}>
-          {(item) => (
-            <TableRow
-              key={item.AttendeeID}
-              data-selected={
-                selectedKey === item.AttendeeID ? "true" : undefined
-              }
-              onClick={() => setSelectedKey(item.AttendeeID)}
-              style={{ height: "40px" }}
-              className={`cursor-pointer text-xl capitalize ${
-                selectedKey === item.AttendeeID
-                  ? "table-row-selected"
-                  : "table-row-hover"
-              }`}
-            >
-              {(columnKey) => (
-                <TableCell key={columnKey} className="p-2.5 m-0 text-sm ">
-                  {columnKey === "TimeOut" ? (
-                    <button
-                      className="border-red-400 border-1 m rounded-lg cursor-pointer p-1 bg-red-200 hover:bg-red-300 fixed"
-                      style={{ marginTop: "-20px" }}
-                    >
-                      Time Out
-                    </button>
-                  ) : (
-                    item[columnKey] // Access the property directly from the item
-                  )}
-                </TableCell>
-              )}
-            </TableRow>
+  {(item) => (
+    <TableRow
+      key={item.AttendeeID}
+      data-selected={selectedKey === item.AttendeeID ? "true" : undefined}
+      onClick={() => setSelectedKey(item.AttendeeID)}
+      style={{ height: "40px" }}
+      className={`cursor-pointer text-xl capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
+    >
+      {(columnKey) => (
+        <TableCell key={columnKey} className="p-2.5 m-0 text-sm">
+          {columnKey === "TimeOut" ? (
+            item.TimeOut === '00:00:00' || item.TimeOut == null ? ( // Check if TimeOut is '00:00:00' or null
+              <button
+                className="border-red-400 border-1 m rounded-lg cursor-pointer p-1 bg-red-200 hover:bg-red-300"
+                style={{ marginTop: "-20px" }}
+                onClick={() => handleTimeout(item.AttendeeID)} // Send the current row's ID to handleTimeout
+              >
+                Time Out
+              </button>
+            ) : (
+              item.TimeOut // Display the TimeOut value if it's available
+            )
+          ) : (
+            item[columnKey] // For other columns, just display the value
           )}
-        </TableBody>
+        </TableCell>
+      )}
+    </TableRow>
+  )}
+</TableBody>
+
+
       </Table>
     </div>
   );
