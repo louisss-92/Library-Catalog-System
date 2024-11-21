@@ -18,7 +18,7 @@ import {
   TableCell,
   Pagination,
 } from "@nextui-org/react";
-import { CalendarDate} from "@internationalized/date";
+import { CalendarDate } from "@internationalized/date";
 import { CalendarIcon } from "./ui/CalendarIcon";
 import { TimeInput } from "@nextui-org/react";
 import { ClockCircleLinearIcon } from "./ui/ClockCircleLinearIcon";
@@ -96,7 +96,7 @@ function Registration() {
     const now = new Date();
     const currentTime = now.toTimeString().split(" ")[0];
     const currentDate = now.toISOString().split("T")[0];
-  
+
     const data = {
       Name: name,
       Gender: gender,
@@ -107,9 +107,9 @@ function Registration() {
       Date: currentDate,
       YearLevel: parseInt(yearLevel, 10),
     };
-  
+
     console.log("Data to be submitted:", data);
-  
+
     try {
       const response = await fetch("http://localhost/API/register.php", {
         method: "POST",
@@ -118,11 +118,11 @@ function Registration() {
         },
         body: JSON.stringify(data),
       });
-  
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       onClose();
       setName("");
       setGender("");
@@ -133,7 +133,6 @@ function Registration() {
       console.error("Error submitting form:", error);
     }
   };
-  
 
   return (
     <div className="p-2">
@@ -251,67 +250,67 @@ function Registration() {
                     className="w-full mb-4"
                   />
 
-          {/* Age Field */}
-          <Input
-            isRequired
-            type="number" // Set input type to number
-            label="Age"
-            placeholder="Enter your age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            className="w-full mb-4"
-          />
+                  {/* Age Field */}
+                  <Input
+                    isRequired
+                    type="number" // Set input type to number
+                    label="Age"
+                    placeholder="Enter your age"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    className="w-full mb-4"
+                  />
 
                   {/* Gender and Year Level */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     {/* Gender */}
                     <Select
-  isRequired
-  label="Gender"
-  placeholder="Select gender"
-  value={gender}
-  onChange={(value) => setGender(value)} // Directly setting only the selected value
-  className="w-full"
->
-  {genders.map((gender) => (
-    <SelectItem key={gender.key} value={gender.label}>
-      {gender.label}
-    </SelectItem>
-  ))}
-</Select>
+                      isRequired
+                      label="Gender"
+                      placeholder="Select gender"
+                      value={gender}
+                      onChange={(value) => setGender(value)} // Directly setting only the selected value
+                      className="w-full"
+                    >
+                      {genders.map((gender) => (
+                        <SelectItem key={gender.key} value={gender.label}>
+                          {gender.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
 
                     {/* Year Level */}
                     <Select
-  isRequired
-  label="Year Level"
-  placeholder="Select year level"
-  value={yearLevel}
-  onChange={(value) => setYearLevel(value)} // Directly setting only the selected value
-  className="w-full"
->
-  {yearlevels.map((yearlevel) => (
-    <SelectItem key={yearlevel.key} value={yearlevel.label}>
-      {yearlevel.label}
-    </SelectItem>
-  ))}
-</Select>
+                      isRequired
+                      label="Year Level"
+                      placeholder="Select year level"
+                      value={yearLevel}
+                      onChange={(value) => setYearLevel(value)} // Directly setting only the selected value
+                      className="w-full"
+                    >
+                      {yearlevels.map((yearlevel) => (
+                        <SelectItem key={yearlevel.key} value={yearlevel.label}>
+                          {yearlevel.label}
+                        </SelectItem>
+                      ))}
+                    </Select>
                   </div>
 
                   {/* Course */}
                   <Select
-  isRequired
-  label="Course"
-  placeholder="Select course"
-  value={course}
-  onChange={(value) => setCourse(value)} // Directly setting only the selected value
-  className="w-full mb-4"
->
-  {courses.map((course) => (
-    <SelectItem key={course.key} value={course.label}>
-      {course.label}
-    </SelectItem>
-  ))}
-</Select>
+                    isRequired
+                    label="Course"
+                    placeholder="Select course"
+                    value={course}
+                    onChange={(value) => setCourse(value)} // Directly setting only the selected value
+                    className="w-full mb-4"
+                  >
+                    {courses.map((course) => (
+                      <SelectItem key={course.key} value={course.label}>
+                        {course.label}
+                      </SelectItem>
+                    ))}
+                  </Select>
 
                   {/* Purpose */}
                   <Input

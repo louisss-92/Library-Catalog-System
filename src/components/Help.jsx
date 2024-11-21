@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "@nextui-org/react";
 
 function Help() {
   // Define separate states for each modal
@@ -10,21 +17,34 @@ function Help() {
 
   return (
     <div>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl ml-20 mt-10">Help, how it works</h1>
-      
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl ml-20 mt-10">
+        Help, how it works
+      </h1>
 
       <div className="grid grid-cols-3 gap-4 m-20">
         {/* Buttons to open respective modals */}
-        <Button onPress={() => setRegistrationOpen(true)} className="col-span-1 p-28">
+        <Button
+          onPress={() => setRegistrationOpen(true)}
+          className="col-span-1 p-28"
+        >
           Admin Help
         </Button>
-        <Button onPress={() => setLibraryOpen(true)} className="col-span-2 p-28">
+        <Button
+          onPress={() => setLibraryOpen(true)}
+          className="col-span-2 p-28"
+        >
           Library Help
         </Button>
-        <Button onPress={() => setAccountOpen(true)} className="col-span-2 p-28">
+        <Button
+          onPress={() => setAccountOpen(true)}
+          className="col-span-2 p-28"
+        >
           Registration Help
         </Button>
-        <Button onPress={() => setGeneralOpen(true)} className="col-span-1 p-28">
+        <Button
+          onPress={() => setGeneralOpen(true)}
+          className="col-span-1 p-28"
+        >
           More Help
         </Button>
 
@@ -43,7 +63,9 @@ function Help() {
                   <p>Here’s information to help with registration...</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>Close</Button>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
                 </ModalFooter>
               </>
             )}
@@ -65,7 +87,9 @@ function Help() {
                   <p>Information about using the library...</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>Close</Button>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
                 </ModalFooter>
               </>
             )}
@@ -87,7 +111,9 @@ function Help() {
                   <p>Instructions on managing your account...</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>Close</Button>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
                 </ModalFooter>
               </>
             )}
@@ -109,7 +135,9 @@ function Help() {
                   <p>General information and FAQ...</p>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>Close</Button>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
                 </ModalFooter>
               </>
             )}

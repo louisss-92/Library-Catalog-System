@@ -1,8 +1,7 @@
 /* clock.css */
 .clock-container {
-  
   color: #ffc683; /* white text */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .clock-time {

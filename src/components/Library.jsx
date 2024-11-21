@@ -1,4 +1,4 @@
-import './library.css';
+import "./library.css";
 import { Card, CardHeader, Image, Divider } from "@nextui-org/react";
 
 function Library() {
@@ -13,7 +13,9 @@ function Library() {
         {["Adventure", "Horror", "Comedy", "Drama"].map((genre, index) => (
           <Card key={index} className="w-full h-[180px] relative">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-              <p className="text-xs text-white/60 uppercase font-bold">What to watch</p>
+              <p className="text-xs text-white/60 uppercase font-bold">
+                What to watch
+              </p>
               <h4 className="text-white font-medium text-sm">{genre}</h4>
             </CardHeader>
             <Image
@@ -29,30 +31,37 @@ function Library() {
       {/* Recommendations Section */}
       <h3 className="text-lg font-semibold mb-3">Recommendations</h3>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, index) => ( // Change to 8 for a 4x2 grid
-          <Card key={index} className="w-full p-8 flex flex-row items-center">
-            <div className="flex justify-center">
-              <Image
-                src="prof2.jpg" // Replace with actual image URLs
-                alt="Book cover"
-                className="rounded-lg object-cover"
-                width={120} // Adjust width as needed
-                height={120} // Adjust height as needed
-              />
-            </div>
-            <div className="text-center space-y-1 mt-2 ml-[40px]">
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">Marahet si Sischan as pangit pa</h3>
-              <p className="text-xs text-gray-600">Christian ni Cantor</p>
-              <div className="flex h-5 items-center space-x-4 text-small">
-                <div>adventure</div>
-                <Divider orientation="vertical" />
-                <div>Docs</div>
-                <Divider orientation="vertical" />
-                <div>Source</div>
+        {[...Array(8)].map(
+          (
+            _,
+            index // Change to 8 for a 4x2 grid
+          ) => (
+            <Card key={index} className="w-full p-8 flex flex-row items-center">
+              <div className="flex justify-center">
+                <Image
+                  src="prof2.jpg" // Replace with actual image URLs
+                  alt="Book cover"
+                  className="rounded-lg object-cover"
+                  width={120} // Adjust width as needed
+                  height={120} // Adjust height as needed
+                />
               </div>
-            </div>
-          </Card>
-        ))}
+              <div className="text-center space-y-1 mt-2 ml-[40px]">
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">
+                  Marahet si Sischan as pangit pa
+                </h3>
+                <p className="text-xs text-gray-600">Christian ni Cantor</p>
+                <div className="flex h-5 items-center space-x-4 text-small">
+                  <div>adventure</div>
+                  <Divider orientation="vertical" />
+                  <div>Docs</div>
+                  <Divider orientation="vertical" />
+                  <div>Source</div>
+                </div>
+              </div>
+            </Card>
+          )
+        )}
       </div>
     </div>
   );

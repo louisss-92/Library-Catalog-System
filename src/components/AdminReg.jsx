@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  Tooltip,
-} from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -13,14 +11,14 @@ import {
   getKeyValue,
 } from "@nextui-org/react";
 import { users } from "./data";
-import { 
-
-   useMemo } from "react";
+import { useMemo } from "react";
 import "./reg.css";
 import DateDisplay from "./DateDisplay.jsx";
 import Clock from "./Clock.jsx";
 
-{/* <AdminSideBar></AdminSideBar>(); */}
+{
+  /* <AdminSideBar></AdminSideBar>(); */
+}
 
 function AdminReg() {
   // //PopOutButton
@@ -75,7 +73,7 @@ function AdminReg() {
       </div>
 
       <hr className="m-2 border-2 border-gray-300 " />
- 
+
       {/* ////////////////////////////////////////////// */}
 
       <div
@@ -112,8 +110,6 @@ function AdminReg() {
             </Tooltip>
           ))}
         </div>
-
-
       </div>
 
       {/* ///////////////////////////////////////////////////////// */}
@@ -185,11 +181,7 @@ function AdminReg() {
             >
               {(columnKey) => (
                 <TableCell key={columnKey} className="p-2.5 m-0 text-sm ">
-                  {columnKey === "to" ? (
-                    "-"
-                  ) : (
-                    getKeyValue(item, columnKey)
-                  )}
+                  {columnKey === "to" ? "-" : getKeyValue(item, columnKey)}
                 </TableCell>
               )}
             </TableRow>

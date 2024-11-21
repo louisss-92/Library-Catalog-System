@@ -1,12 +1,9 @@
 /* Custom hover color for table rows */
 .table-row-hover:hover {
-    background-color: #fffae6; /* Light yellow for hover effect */
-  }
-  
-  /* Custom color for selected rows */
-  .table-row-selected {
-    background-color: #ffd580; /* Darker yellow for selected row */
-  }
+  background-color: #fffae6; /* Light yellow for hover effect */
+}
 
-  
-  
+/* Custom color for selected rows */
+.table-row-selected {
+  background-color: #ffd580; /* Darker yellow for selected row */
+}
