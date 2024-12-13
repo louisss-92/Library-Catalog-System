@@ -1,5 +1,5 @@
-import React from "react";
 import { Button, Image, Divider } from "@nextui-org/react";
+import PropTypes from "prop-types";
 
 const RecommendationCard = ({ book, onOpen }) => {
   return (
@@ -29,6 +29,17 @@ const RecommendationCard = ({ book, onOpen }) => {
       </div>
     </Button>
   );
+};
+
+// Prop validation
+RecommendationCard.propTypes = {
+  book: PropTypes.shape({
+    img: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+  }).isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default RecommendationCard;
