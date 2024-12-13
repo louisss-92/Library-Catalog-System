@@ -1,4 +1,8 @@
+
 import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+
+
 function Body({ children }) {
   return <div className="body">{children}</div>;
 }

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   IconLayoutSidebarLeftCollapse,
@@ -13,6 +14,14 @@ import {
 // import {Listbox, ListboxItem} from "@nextui-org/react";
 import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
+import { useState } from 'react';
+import { IconLayoutSidebarLeftCollapse, IconLayoutSidebarRightCollapse, IconUserCog } from '@tabler/icons-react';
+import {Popover, PopoverTrigger, PopoverContent, Button} from "@nextui-org/react";
+import {MailIcon} from './MailIcon.jsx';
+import {LockIcon} from './LockIcon.jsx';
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input} from "@nextui-org/react";
+import PropTypes from 'prop-types';
+
 
 import {
   Modal,
@@ -40,6 +49,9 @@ function Sidebar({ onSelectPage }) {
     onSelectPage(page);
   };
 
+  Sidebar.propTypes = {
+    onSelectPage: PropTypes.func.isRequired,
+  };
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <button onClick={toggleSidebar} className="collapse-btn">

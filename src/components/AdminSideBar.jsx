@@ -1,4 +1,6 @@
+
 import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import { useState } from "react";
 import {
   IconLayoutSidebarLeftCollapse,
@@ -264,5 +266,6 @@ function Sidebar({ onSelectPage }) {
     </div>
   );
 }
+
 
 export default Sidebar;
