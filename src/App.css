@@ -1,146 +1,165 @@
 .main-container {
-  display: flex;
-  width: 100%;
-  height: 850px;
+    display: flex;
+    width: 100%;
+    height: 850px;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+    transition: width 0.3s ease;
+  }
+  .sidebar.collapsed {
+    width: 60px;
+  }
+  .collapse-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    position: absolute;
+    left: 10px;
+    margin-top: 10px;
+  }
+  
+  .toggle-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .library-logo, .logo, .buttons .functions div {
+    display: inline;
+  }
+  
+  .sidebar.collapsed .library-logo,
+  .sidebar.collapsed .logo,
+  .sidebar.collapsed .buttons .functions div {
+    display: none;
+  }
+
+  .logo {
+    margin-top: -10px;
+  }
+  
+  .sidebar .buttons .functions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px;
+    width: 170px;
+    border-radius: 15px;
+    margin-left: 50px;
+  }
+  
+  .sidebar.collapsed .buttons .functions {
+    justify-content: center;
+    width: auto;
+  }
+
+    .sidebar button {
+        border: none;
+        cursor: pointer;
+        background: none;
+        color: #ffffff;
+    }
+
+    .sidebar .logo-pic {
+        width: 200px;
+        height: auto;
+    }
+
+    .sidebar .buttons {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: baseline;
+        margin-left: -20px;
+    }
+
+    .sidebar .logo {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar .buttons img {
+        width: 30px;
+        margin-right: 20px;
+        
+    }
+    .sidebar.collapsed .buttons img {
+        width: 80px; /* Increased width when collapsed */
+        height: auto; /* Increased height when collapsed */
+    }
+
+    .sidebar .buttons .functions {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        padding: 15px;
+        width: 170px;
+        border-radius: 15px;
+    }
+
+    .sidebar .buttons .functions:hover {
+      
+        color: #ffc683;
+        border-left: #ffc683;
+    }
+
+    .sidebar .buttons .functions div {
+        margin-top: 8px;
+    }
+
+
+    /*libarry logo design*/
+    .library-logo {
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .library-logo img{
+        width: 270px;
+        height: auto;
+    }
+
+    .components {
+        padding-bottom: 10px;
+    }
+    /*end of libarry logo design*/
+
+  
+  .body {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fcf8f0;
+    /* height: 100%; */
+    height: 820px;
+    margin: 20px;
+    border-radius: 50px;
+  }
+
+
+body, html {
+    background-color: #57429D;
+    margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
-.sidebar {
+.vertical-tabs-container {
+  display: flex;
+  flex-direction: column;
   width: 200px;
-  padding: 20px;
-  display: flex;
+}
+
+.vertical-tabs .nextui-tab {
   flex-direction: column;
-  align-items: center;
-  color: #ffffff;
-  transition: width 0.3s ease;
-}
-.sidebar.collapsed {
-  width: 60px;
-}
-.collapse-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 20px;
-  position: absolute;
-  left: 10px;
-  margin-top: 10px;
-}
-
-.toggle-icon {
-  width: 24px;
-  height: 24px;
-}
-.library-logo,
-.logo,
-.buttons .functions div {
-  display: inline;
-}
-
-.sidebar.collapsed .library-logo,
-.sidebar.collapsed .logo,
-.sidebar.collapsed .buttons .functions div {
-  display: none;
-}
-
-.sidebar .buttons .functions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 15px;
-  width: 170px;
-  border-radius: 15px;
-  margin-left: 50px;
-}
-
-.sidebar.collapsed .buttons .functions {
-  justify-content: center;
-  width: auto;
-}
-
-.sidebar button {
-  border: none;
-  cursor: pointer;
-  background: none;
-  color: #ffffff;
-}
-
-.sidebar .logo-pic {
-  width: 100px;
-  height: auto;
-}
-
-.sidebar .buttons {
-  display: flex;
-  flex-direction: column;
-  margin-top: 80px;
-  align-items: baseline;
-  margin-left: -20px;
-}
-
-.sidebar .logo {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar .buttons img {
-  width: 30px;
-  margin-right: 20px;
-}
-.sidebar.collapsed .buttons img {
-  width: 80px; /* Increased width when collapsed */
-  height: auto; /* Increased height when collapsed */
-}
-
-.sidebar .buttons .functions {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: row;
-  padding: 15px;
-  width: 170px;
-  border-radius: 15px;
-}
-
-.sidebar .buttons .functions:hover {
-  background-color: #45357cc7;
-  color: #ffc683;
-}
-
-.sidebar .buttons .functions div {
-  margin-top: 8px;
-}
-
-/*libarry logo design*/
-.library-logo {
-  margin-bottom: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.library-logo img {
-  width: 50px;
-}
-
-.components {
-  padding-bottom: 10px;
-}
-/*end of libarry logo design*/
-
-.body {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #fcf8f0;
-  height: 100%;
-  margin: 20px;
-  border-radius: 50px;
-}
-
-body,
-html {
-  background-color: #57429d;
-  margin: 0;
-  height: 100%;
-  width: 100%;
+  align-items: flex-start;
 }

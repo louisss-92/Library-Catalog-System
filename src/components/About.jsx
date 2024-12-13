@@ -6,7 +6,7 @@ import { Tooltip } from "@nextui-org/react";
 
 function About() {
   return (
-    <div className='main-content'>
+    <div className='main-content' style={{width:"1140px"}}>
       <div className='upper'>
         <div className='titles'>
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2">
@@ -22,7 +22,7 @@ function About() {
             </p>
             <Button variant="outline">Donate</Button>
         </div>
-        <img src="book.gif" alt="" className='pics-1' />
+        <img src="book.gif" alt="" className='pics-1' style={{ width: "400px", marginRight:"10px" }}/>
       </div>
 
       <div className='bottom'>
@@ -37,12 +37,12 @@ function About() {
 
         <div className='background'>
           <img src="ischan.jpeg" alt="" className='profile'/>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-2">Christian Cantor</h4>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight mt-2">Christian Cantor</h4>
           <p className="text-sm text-muted-foreground">Backend Developer </p>
           <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">Lorem ipsum creating innovative solutions creating innovative solutions</blockquote>
           <div className='socials'>
             
-          <Tooltip showArrow={true} placement='bottom' content="Christian Cantor">
+          <Tooltip showArrow={true} placement='bottom' content="Christian Cantor"  >
             <a href="https://www.facebook.com/christian.cantor.902">
                   <IconBrandFacebook color='#ffc683' size={30} style={{
                     marginRight: '15px',
@@ -72,7 +72,7 @@ function About() {
 
         <div className='background'>
           <img src="nowl.jpeg" alt="" className='profile'/>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-2">
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight mt-2">
             Noel Salazar
           </h4>
           <p className="text-sm text-muted-foreground">Fullstack Developer</p>
@@ -88,7 +88,7 @@ function About() {
             </Tooltip>
 
             <Tooltip showArrow={true} placement='bottom' content="Noel Salazar">
-              <a href="www.instagram.com">
+              <a href="">
                 <IconBrandInstagram color='#ffc683' size={30} style={{
                     marginRight: '15px',
                     cursor: 'pointer'
@@ -102,15 +102,15 @@ function About() {
                 }}/>
             </Tooltip>
           </div>
-        </div>
+        </div> 
 
         <div className='background'>
-          <img src="jean-prof.JPG" alt="" className='profile'/>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-2">Jean Marianne Elica</h4>
-          <p className="text-sm text-muted-foreground">Frontend Developer / Designer</p>
+          <img src="../../public/mar1.jpg" alt="" className='profile'/>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight mt-2">Jean Marianne Elica</h4>
+          <p className="text-xs text-muted-foreground">Frontend Developer / Designer</p>
           <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">Lorem ipsum creating innovative solutions creating innovative solutions</blockquote>
           <div className='socials'>
-          <Tooltip showArrow={true} placement='bottom' content="Jean Marianne Elica">
+          <Tooltip showArrow={true} placement='bottom' content="Jean Marianne Elica" style={{fontSize:"10px"}}>
               <a href="https://www.facebook.com/jeanmarianne.elica.9">
                   <IconBrandFacebook color='#ffc683' size={30} style={{
                     marginRight: '15px',
@@ -139,11 +139,11 @@ function About() {
 
         <div className='background'>
           <img src="prof2.jpg" alt="" className='profile'/>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-2" >Philippe Louis Garibay</h4>
+          <h4 className="scroll-m-20 text-base font-semibold tracking-tight mt-2" >Philippe Louis Garibay</h4>
           <p className="text-sm text-muted-foreground">Frontend Developer</p>
           <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">Lorem ipsum creating innovative solutions creating innovative solutions</blockquote>
           <div className='socials'>
-          <Tooltip showArrow={true} placement='bottom' content="Philippe Garibay">
+          <Tooltip showArrow={true} placement='bottom' content="Philippe Garibay" >
               <a href="www.facebook.com">
                 <IconBrandFacebook color='#ffc683' size={30} style={{
                   marginRight: '15px',

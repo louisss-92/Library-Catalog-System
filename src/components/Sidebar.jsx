@@ -10,8 +10,10 @@ import {
   PopoverContent,
   Button,
 } from "@nextui-org/react";
+// import {Listbox, ListboxItem} from "@nextui-org/react";
 import { MailIcon } from "./MailIcon.jsx";
 import { LockIcon } from "./LockIcon.jsx";
+
 import {
   Modal,
   ModalContent,
@@ -20,21 +22,24 @@ import {
   ModalFooter,
   Input,
 } from "@nextui-org/react";
-import PropTypes from "prop-types";
 
 function Sidebar({ onSelectPage }) {
   const [collapsed, setCollapsed] = useState(false);
   const [isRegistrationOpen, setRegistrationOpen] = useState(false);
   const [isLibraryOpen, setLibraryOpen] = useState(false);
   const [isAccountOpen, setAccountOpen] = useState(false);
-  const [isGeneralOpen, setGeneralOpen] = useState(false);
+  const [selectedPage, setSelectedPage] = useState("Library");
+  // const [isGeneralOpen, setGeneralOpen] = useState(false);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
-  Sidebar.propTypes = {
-    onSelectPage: PropTypes.func.isRequired,
+
+  const handleSelectPage = (page) => {
+    setSelectedPage(page);
+    onSelectPage(page);
   };
+
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <button onClick={toggleSidebar} className="collapse-btn">
@@ -53,50 +58,56 @@ function Sidebar({ onSelectPage }) {
 
       {!collapsed && (
         <div className="library-logo">
-          <img src="/logo.png" alt="Library logo" />
-          <div>
-            <div>Library</div>
-            <div>System</div>
-          </div>
+          <img src="/LibrarySystemLogo.png" alt="Library logo" />
         </div>
       )}
 
       {!collapsed && (
         <div className="logo">
-          <img className="logo-pic" src="/logo.png" alt="College logo" />
-          <div>Batanes State</div>
-          <div>College</div>
+          <img className="logo-pic" src="/BSC_logo.png" alt="College logo" />
         </div>
       )}
 
-      <div className="buttons">
-        <button onClick={() => onSelectPage("Library")} className="functions">
-          <img src="/library.png" alt="Library icon" />
-          {!collapsed && <div className="components">Library</div>}
-        </button>
+    <div className="buttons">
+      <Button
+        onClick={() => handleSelectPage("Library")}
+        className={`functions ${selectedPage === "Library" ? "active" : ""} mb-6`}
+        key="library"  // Add a key to force re-render when changing pages
+      >
+        <img src="/library.png" alt="Library icon" />
+        {!collapsed && <div className= "components mr-7">Library</div>}
+      </Button>
 
-        <button
-          onClick={() => onSelectPage("Registration")}
-          className="functions"
+
+        <Button
+          onClick={() => handleSelectPage("Registration")}
+          className={`functions ${selectedPage === "Registration" ? "active" : ""} mb-6`}
         >
           <img src="/registration.png" alt="Registration icon" />
           {!collapsed && <div className="components">Registration</div>}
-        </button>
+        </Button>
 
-        <button onClick={() => onSelectPage("About")} className="functions">
+        <Button
+          onClick={() => handleSelectPage("About")}
+          className={`functions ${selectedPage === "About" ? "active" : ""} mb-6`}
+        >
           <img src="/info.png" alt="About icon" />
-          {!collapsed && <div className="components">About</div>}
-        </button>
+          {!collapsed && <div className="components mr-7">About</div>}
+        </Button>
 
-        <button onClick={() => onSelectPage("Help")} className="functions">
+        <Button
+          onClick={() => handleSelectPage("Help")}
+          className={`functions ${selectedPage === "Help" ? "active" : ""} mb-6`}
+        >
           <img src="/help.png" alt="Help icon" />
-          {!collapsed && <div className="components">Help</div>}
-        </button>
+          {!collapsed && <div className="components mr-8">Help</div>}
+        </Button>
 
-        <Popover showArrow backdrop="transparent" placement="right">
+        <Popover showArrow backdrop="transparent" placement="right" className="mt-10">
           <PopoverTrigger>
             <Button>
-              <IconUserCog size={30} /> Admin
+              <IconUserCog size={30} color="#ffc683"/>
+              <div className="mr-7">Admin</div>
             </Button>
           </PopoverTrigger>
           <PopoverContent>
@@ -106,25 +117,19 @@ function Sidebar({ onSelectPage }) {
                 className="p-1 text-sm"
                 onPress={() => setRegistrationOpen(true)}
               >
-                Admin Help
+                GIP/JO
               </Button>
               <Button
                 className="p-1 text-sm"
                 onPress={() => setLibraryOpen(true)}
               >
-                Library Help
+                Library Aide
               </Button>
               <Button
                 className="p-1 text-sm"
                 onPress={() => setAccountOpen(true)}
               >
-                Registration Help
-              </Button>
-              <Button
-                className="p-1 text-sm"
-                onPress={() => setGeneralOpen(true)}
-              >
-                More Help
+                President/Librarian
               </Button>
             </div>
           </PopoverContent>
@@ -141,7 +146,7 @@ function Sidebar({ onSelectPage }) {
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Log in
+                  Log in as a GIP/JO:
                 </ModalHeader>
                 <ModalBody>
                   <Input
@@ -168,7 +173,7 @@ function Sidebar({ onSelectPage }) {
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Sign in
+                    Log in
                   </Button>
                 </ModalFooter>
               </>
@@ -186,7 +191,7 @@ function Sidebar({ onSelectPage }) {
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Log in
+                  Log in as a Library Aide:
                 </ModalHeader>
                 <ModalBody>
                   <Input
@@ -213,7 +218,7 @@ function Sidebar({ onSelectPage }) {
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Sign in
+                    Log in
                   </Button>
                 </ModalFooter>
               </>
@@ -225,13 +230,13 @@ function Sidebar({ onSelectPage }) {
           isOpen={isAccountOpen}
           onOpenChange={setAccountOpen}
           backdrop="opaque"
-          size="1xl"
+          size="1xl" 
         >
           <ModalContent>
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">
-                  Log in
+                  Log in as a President/Librarian:
                 </ModalHeader>
                 <ModalBody>
                   <Input
@@ -258,7 +263,7 @@ function Sidebar({ onSelectPage }) {
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Sign in
+                    Log in
                   </Button>
                 </ModalFooter>
               </>
@@ -266,50 +271,12 @@ function Sidebar({ onSelectPage }) {
           </ModalContent>
         </Modal>
 
-        <Modal
-          isOpen={isGeneralOpen}
-          onOpenChange={setGeneralOpen}
-          backdrop="opaque"
-          size="1xl"
+        <Button
+          onPress={() => onSelectPage("AdminReg")}
+          className="functions"
         >
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">
-                  Log in
-                </ModalHeader>
-                <ModalBody>
-                  <Input
-                    autoFocus
-                    endContent={
-                      <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Username"
-                    placeholder="Enter your Username"
-                    variant="bordered"
-                  />
-                  <Input
-                    endContent={
-                      <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                    }
-                    label="Password"
-                    placeholder="Enter your password"
-                    type="password"
-                    variant="bordered"
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="flat" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="primary" onPress={onClose}>
-                    Sign in
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+          temp admin btn
+        </Button>
       </div>
     </div>
   );
