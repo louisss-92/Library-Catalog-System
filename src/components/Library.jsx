@@ -1,8 +1,9 @@
-import './library.css';
-import { SearchIcon } from "./SearchIcon.jsx";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image, Divider } from "@nextui-org/react";
 import axios from "axios";
+import './library.css';
+import { SearchIcon } from "./SearchIcon.jsx";
+import RecommendationCard from "./RecommendationCard.jsx";
 
 function Library() {
   const [isRegistrationOpen, setRegistrationOpen] = useState(false);
@@ -42,12 +43,73 @@ function Library() {
     setBookOpen(true);
   };
 
+  const recommendations = [
+    {
+      title: "Sample Book 1",
+      author: "Sample Author 1",
+      genre: "Adventure",
+      description: "This is a sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    // Add more books here...
+  ];
+
+
   return (
     <div className="p-2">
       <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2 mr-60">Library</h1>
 
-        <Button onPress={handleModalOpen}>
+        <Button onPress={handleModalOpen} className="min-w-96 h-10 -mt-1"> 
           <SearchIcon size={18} />
           Tap to search....
         </Button>
@@ -157,43 +219,16 @@ function Library() {
       <h3 className="text-lg font-semibold mb-3">Recommendations</h3>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, index) => (
-          <Button
-          key={index}
-          onPress={() =>
-            openBookModal({
-              title: `Sample Book ${index + 1}`,
-              author: `Sample Author ${index + 1}`,
-              genre: "Adventure",
-              description: "This is a sample book description.",
-              img: "prof2.jpg",
-            })
-          }
-          className="flex flex-row items-center bg-gray-100 p-20 rounded-lg shadow-lg"
-        >
-            <div>
-              <Image src="prof2.jpg" alt="Book cover" className="rounded-lg object-cover min-w-20" width={120} height={120} />
-            </div>
-            <div className="text-center space-y-1 mt-2 ml-[40px]">
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">Sample Book {index + 1}</h3>
-              <p className="text-xs text-gray-600">Sample Author</p>
-              <div className="flex h-5 items-center space-x-4 text-small">
-                <div>Adventure</div>
-                <Divider orientation="vertical" />
-                <div>Docs</div>
-                <Divider orientation="vertical" />
-                <div>Source</div>
-              </div>
-            </div>
-          </Button>
+        {recommendations.map((book, index) => (
+          <RecommendationCard key={index} book={book} onOpen={openBookModal} />
         ))}
       </div>
 
-      {/* Book Details Modal */}
-      <Modal 
-      isOpen={isBookOpen} onOpenChange={setBookOpen}
-      backdrop="opaque"
-          size="1xl"
+      <Modal
+        isOpen={isBookOpen}
+        onOpenChange={setBookOpen}
+        backdrop="opaque"
+        size="1xl"
       >
         <ModalContent>
           {(onClose) => (
