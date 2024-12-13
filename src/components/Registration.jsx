@@ -31,11 +31,11 @@ import Clock from "./Clock.jsx";
 
 function Registration() {
   // State to hold the fetched data
-  const [items, setItems] = useState([]);
-  const [selectedKey, setSelectedKey] = useState(null);
-  const [page, setPage] = useState(1);
+  const [items, setItems] = useState([]); // Stores the list of attendees
+  const [selectedKey, setSelectedKey] = useState(null); // Tracks the selected row
+  const [page, setPage] = useState(1); // Current page for pagination
   const rowsPerPage = 8; // Set rows per page
-  const pages = Math.ceil(items.length / rowsPerPage); // Calculate the number of pages based on items
+  const pages = Math.ceil(items.length / rowsPerPage); // Calculate total pages
 
   // State for modal form inputs
   const [name, setName] = useState("");
@@ -48,37 +48,38 @@ function Registration() {
   const [eventTime, setEventTime] = useState(new Time(11, 45)); // Default time
 
   // Fetch data from API
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost/API/attendance.php");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setItems(result); // Assuming result is an array of objects
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost/API/attendance.php");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const result = await response.json();
+      setItems(result); // Update state with fetched data
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  // Fetch data when component mounts
+  useEffect(() => {
     fetchData();
   }, []);
 
   // Handle selection change
   const handleSelectionChange = (key) => {
-    setSelectedKey(key);
+    setSelectedKey(key); // Set the selected row's key
     console.log("Selected row:", key); // Logs the currently selected row key
   };
 
-  // Table items for current page
+  // Compute items for the current page
   const paginatedItems = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return items.slice(start, end);
   }, [page, items]);
 
-  // PopOutButton
+  // Modal state management
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [backdrop, setBackdrop] = useState("opaque");
 
@@ -86,53 +87,52 @@ function Registration() {
 
   const handleOpen = (backdrop) => {
     setBackdrop(backdrop);
-    onOpen();
+    onOpen(); // Open the modal
   };
 
-  //handle submission for timeout
-const handleTimeout = async (attendeeID) => {
-  const now = new Date();
-  const currentTime = now.toTimeString().split(" ")[0]; // Get current time (HH:MM:SS)
+  // Handle timeout submission
+  const handleTimeout = async (attendeeID) => {
+    const now = new Date();
+    const currentTime = now.toTimeString().split(" ")[0]; // Get current time (HH:MM:SS)
 
-  const data = {
-    AttendeeID: attendeeID,
-    TimeOut: currentTime,
+    const data = {
+      AttendeeID: attendeeID,
+      TimeOut: currentTime,
+    };
+
+    try {
+      const response = await fetch("http://localhost/API/updateTimeOut.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        console.log("TimeOut updated successfully");
+        fetchData(); // Refresh data after updating timeout
+      } else {
+        console.error("Failed to update TimeOut:", result.error);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
-
-  try {
-    const response = await fetch("http://localhost/API/updateTimeOut.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const result = await response.json();
-    if (result.success) {
-      console.log("TimeOut updated successfully");
-    } else {
-      console.error("Failed to update TimeOut:", result.error);
-    }
-  } catch (error) {
-    console.error("Error submitting form:", error);
-  }
-};
-
-
 
   // Handle form submission
   const handleSubmit = async () => {
     const now = new Date();
-    const currentTime = now.toTimeString().split(" ")[0];
-    const currentDate = now.toISOString().split("T")[0];
+    const currentTime = now.toTimeString().split(" ")[0]; // Get current time
+    const currentDate = now.toISOString().split("T")[0]; // Get current date
 
     const data = {
-      AttendeeID: "",
+      AttendeeID: "", // Generate or fetch a unique ID if required
       Name: name || "",
       Gender: gender || "",
       Age: age || "",
@@ -143,42 +143,38 @@ const handleTimeout = async (attendeeID) => {
       purpose: purpose || "",
     };
 
-    // Custom serializer to handle circular references
-    const getCircularReplacer = () => {
-      const seen = new WeakSet();
-      return (key, value) => {
-        if (typeof value === "object" && value !== null) {
-          if (seen.has(value)) {
-            return;
-          }
-          seen.add(value);
-        }
-        return value;
-      };
-    };
-
     try {
       const response = await fetch("http://localhost/API/Attendance.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data, getCircularReplacer()),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      console.log("Response:", await response.json());
+      const result = await response.json();
 
-      onClose();
-      setName("");
-      setGender("");
-      setAge("");
-      setCourse("");
-      setYearLevel("");
-      setPurpose("");
+      if (result.success) {
+        console.log("Registration successful:", result.message);
+        
+        // Refresh data and close modal
+        fetchData(); 
+        onClose(); 
+  
+        // Clear form inputs
+        setName("");
+        setGender("");
+        setAge("");
+        setCourse("");
+        setYearLevel("");
+        setPurpose("");
+      } else {
+        console.error("Registration failed:", result.error);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
