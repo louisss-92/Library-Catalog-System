@@ -1,5 +1,8 @@
 import React from "react";
-import { Tooltip } from "@nextui-org/react";
+
+import {
+  useDisclosure,
+} from "@nextui-org/react";
 import {
   Table,
   TableHeader,
@@ -13,24 +16,24 @@ import {
 import { users } from "./data";
 import { useMemo } from "react";
 import "./reg.css";
-import DateDisplay from "./DateDisplay.jsx";
-import Clock from "./Clock.jsx";
+import DateDisplay from "./ui/DateDisplay.jsx";
+import Clock from "./ui/Clock.jsx";
+import { DatePicker } from "@nextui-org/date-picker";
+import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { filterData } from "./data";
 
-{
-  /* <AdminSideBar></AdminSideBar>(); */
-}
 
-function AdminReg() {
-  // //PopOutButton
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  // const [backdrop, setBackdrop] = React.useState("opaque");
+function Registration() {
+  //PopOutButton
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [backdrop, setBackdrop] = React.useState("opaque");
 
   const backdrops = ["opaque"];
 
-  // const handleOpen = (backdrop) => {
-  //   setBackdrop(backdrop);
-  //   onOpen();
-  // };
+  const handleOpen = (backdrop) => {
+    setBackdrop(backdrop);
+    onOpen();
+  };
 
   //Table
   const [page, setPage] = React.useState(1);
@@ -55,6 +58,20 @@ function AdminReg() {
     console.log("Selected row:", key); // Logs the currently selected row key
   };
 
+  //Filter
+  const myFilter = (textValue, inputValue) => {
+    if (inputValue.length === 0) {
+      return true;
+    }
+
+    // Normalize both strings so we can slice safely
+    // take into account the ignorePunctuation option as well...
+    textValue = textValue.normalize("NFC").toLocaleLowerCase();
+    inputValue = inputValue.normalize("NFC").toLocaleLowerCase();
+
+    return textValue.slice(0, inputValue.length) === inputValue;
+  };
+
   return (
     <div className="p-2">
       <div className="top flex items-center mx-3">
@@ -65,8 +82,9 @@ function AdminReg() {
             color="#ffc683"
             className="mr-2 size-14"
           />
-          Admin Registration
+          Admin Reg
         </h1>
+
         <div className="ml-auto pr-3">
           <Clock className="top-right-clock" />
         </div>
@@ -77,38 +95,40 @@ function AdminReg() {
       {/* ////////////////////////////////////////////// */}
 
       <div
-        className="searchBarAndCheckInBtn flex align items-center "
-        style={{ margin: "-20px", marginLeft: "20px" }}
+        className="searchBarAndCheckInBtn flex items-center gap-4"
+        style={{ margin: "0px", marginLeft: "20px" }}
       >
+        <div></div>
         <DateDisplay />
 
-        {/* PopOutButton */}
-        <div
-          className="flex ml-auto flex-wrap gap-4 mb-10 justify-center sm:gap-3 md:gap-4 "
-          style={{ marginRight: "40px" }}
-        >
-          {backdrops.map((b) => (
-            <Tooltip
-              key={b}
-              placement={"top-end"}
-              content={
-                <div className="px-1 py-2">
-                  {/* <div className="text-small font-bold">Register</div> */}
-                  <div className="text-tiny">Click to Register</div>
-                </div>
-              }
-            >
-              {/* <Button
-                key={b}
-                variant="flat"
-                color="warning"
-                // onPress={() => handleOpen(b)}
-                className="capitalize px-4 py-2  md:text-base w-[200px] h-[50px] font-serif "
-              >
-                Register
-              </Button> */}
-            </Tooltip>
-          ))}
+        {/* Align Calendar and Filter to the right */}
+        <div className="ml-auto flex gap-4">
+          {/* Calendar */}
+          <div className="max-w-xl flex flex-row gap-4 w-[350px] h-[50px]">
+            <DatePicker
+              label="SelectDate"
+              variant="flat"
+              showMonthAndYearPickers
+              color="warning"
+            />
+          </div>
+
+          {/* Filter */}
+          <Autocomplete
+            allowsCustomValue
+            className="max-w-xs w-[350px] h-[50px]"
+            defaultFilter={myFilter}
+            defaultItems={filterData}
+            label="Filter by"
+            variant="flat"
+            color="warning"
+          >
+            {(item) => (
+              <AutocompleteItem key={item.value} variant="flat" color="warning">
+                {item.label}
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
         </div>
       </div>
 
@@ -181,7 +201,7 @@ function AdminReg() {
             >
               {(columnKey) => (
                 <TableCell key={columnKey} className="p-2.5 m-0 text-sm ">
-                  {columnKey === "to" ? "-" : getKeyValue(item, columnKey)}
+                  {getKeyValue(item, columnKey)}
                 </TableCell>
               )}
             </TableRow>
@@ -192,4 +212,4 @@ function AdminReg() {
   );
 }
 
-export default AdminReg;
+export default Registration;

@@ -1,3 +1,5 @@
+
+import PropTypes from "prop-types";
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import {
@@ -216,7 +218,7 @@ function Sidebar({ onSelectPage }) {
           isOpen={isAccountOpen}
           onOpenChange={setAccountOpen}
           backdrop="opaque"
-          size="1xl" 
+          size="1xl"
         >
           <ModalContent>
             {(onClose) => (
@@ -257,10 +259,7 @@ function Sidebar({ onSelectPage }) {
           </ModalContent>
         </Modal>
 
-        <Button
-          onPress={() => onSelectPage("AdminReg")}
-          className="functions"
-        >
+        <Button onPress={() => onSelectPage("AdminReg")} className="functions">
           temp admin btn
         </Button>
       </div>

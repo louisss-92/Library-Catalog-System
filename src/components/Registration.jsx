@@ -24,8 +24,6 @@ import { TimeInput } from "@nextui-org/react";
 import { ClockCircleLinearIcon } from "./ui/ClockCircleLinearIcon";
 import { Time } from "@internationalized/date";
 import { Input } from "@nextui-org/react";
-import { Select, SelectItem } from "@nextui-org/react";
-import { genders, yearlevels, courses } from "./data.js";
 import { DateInput } from "@nextui-org/react";
 import "./reg.css";
 import DateDisplay from "./DateDisplay.jsx";
@@ -91,49 +89,100 @@ function Registration() {
     onOpen();
   };
 
+  //handle submission for timeout
+const handleTimeout = async (attendeeID) => {
+  const now = new Date();
+  const currentTime = now.toTimeString().split(" ")[0]; // Get current time (HH:MM:SS)
+
+  const data = {
+    AttendeeID: attendeeID,
+    TimeOut: currentTime,
+  };
+
+  try {
+    const response = await fetch("http://localhost/API/updateTimeOut.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const result = await response.json();
+    if (result.success) {
+      console.log("TimeOut updated successfully");
+    } else {
+      console.error("Failed to update TimeOut:", result.error);
+    }
+  } catch (error) {
+    console.error("Error submitting form:", error);
+  }
+};
+
+
+
   // Handle form submission
   const handleSubmit = async () => {
     const now = new Date();
     const currentTime = now.toTimeString().split(" ")[0];
     const currentDate = now.toISOString().split("T")[0];
-  
+
     const data = {
-      Name: name,
-      Gender: gender,
-      Age: parseInt(age, 10),
-      Dept: course,
+      AttendeeID: "",
+      Name: name || "",
+      Gender: gender || "",
+      Age: age || "",
+      Dept: course || "",
       TimeIn: currentTime,
-      TimeOut: currentTime,
       Date: currentDate,
-      YearLevel: parseInt(yearLevel, 10),
+      YearLevel: yearLevel || "",
+      purpose: purpose || "",
     };
-  
-    console.log("Data to be submitted:", data);
-  
+
+    // Custom serializer to handle circular references
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) {
+            return;
+          }
+          seen.add(value);
+        }
+        return value;
+      };
+    };
+
     try {
-      const response = await fetch("http://localhost/API/register.php", {
+      const response = await fetch("http://localhost/API/Attendance.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data, getCircularReplacer()),
       });
-  
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
+      console.log("Response:", await response.json());
+
       onClose();
       setName("");
       setGender("");
       setAge("");
-      setYearLevel("");
       setCourse("");
+      setYearLevel("");
+      setPurpose("");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
   };
-  
 
   return (
     <div className="p-2">
@@ -251,67 +300,50 @@ function Registration() {
                     className="w-full mb-4"
                   />
 
-          {/* Age Field */}
-          <Input
-            isRequired
-            type="number" // Set input type to number
-            label="Age"
-            placeholder="Enter your age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            className="w-full mb-4"
-          />
+                  {/* Age Field */}
+                  <Input
+                    isRequired
+                    type="number" // Set input type to number
+                    label="Age"
+                    placeholder="Enter your age"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    className="w-full mb-4"
+                  />
 
                   {/* Gender and Year Level */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    {/* Gender */}
-                    <Select
-  isRequired
-  label="Gender"
-  placeholder="Select gender"
-  value={gender}
-  onChange={(value) => setGender(value)} // Directly setting only the selected value
-  className="w-full"
->
-  {genders.map((gender) => (
-    <SelectItem key={gender.key} value={gender.label}>
-      {gender.label}
-    </SelectItem>
-  ))}
-</Select>
+                    <Input
+                      isRequired
+                      type="text"
+                      label="Gender"
+                      placeholder="Enter your gender(Male, Female, LGBT+...)"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      className="w-full mb-4"
+                    />
 
-                    {/* Year Level */}
-                    <Select
-  isRequired
-  label="Year Level"
-  placeholder="Select year level"
-  value={yearLevel}
-  onChange={(value) => setYearLevel(value)} // Directly setting only the selected value
-  className="w-full"
->
-  {yearlevels.map((yearlevel) => (
-    <SelectItem key={yearlevel.key} value={yearlevel.label}>
-      {yearlevel.label}
-    </SelectItem>
-  ))}
-</Select>
+                    <Input
+                      isRequired
+                      type="text"
+                      label="Year Level"
+                      placeholder="Enter your year level (1st, 2nd, 3rd, 4th)"
+                      value={yearLevel}
+                      onChange={(e) => setYearLevel(e.target.value)}
+                      className="w-full mb-4"
+                    />
                   </div>
 
                   {/* Course */}
-                  <Select
-  isRequired
-  label="Course"
-  placeholder="Select course"
-  value={course}
-  onChange={(value) => setCourse(value)} // Directly setting only the selected value
-  className="w-full mb-4"
->
-  {courses.map((course) => (
-    <SelectItem key={course.key} value={course.label}>
-      {course.label}
-    </SelectItem>
-  ))}
-</Select>
+                  <Input
+                    isRequired
+                    type="text"
+                    label="Course"
+                    placeholder="Enter course(Infotech, Education...)"
+                    value={course}
+                    onChange={(e) => setCourse(e.target.value)}
+                    className="w-full mb-4"
+                  />
 
                   {/* Purpose */}
                   <Input
@@ -389,7 +421,7 @@ function Registration() {
           <TableColumn className="font-serif text-lg" key="Dept" width="20%">
             DEPARTMENT
           </TableColumn>
-          <TableColumn className="font-serif text-lg" key="Purpose" width="20%">
+          <TableColumn className="font-serif text-lg" key="purpose" width="20%">
             PURPOSE
           </TableColumn>
           <TableColumn className="font-serif text-lg" key="TimeIn" width="15%">
@@ -400,37 +432,38 @@ function Registration() {
           </TableColumn>
         </TableHeader>
         <TableBody items={paginatedItems}>
-          {(item) => (
-            <TableRow
-              key={item.AttendeeID}
-              data-selected={
-                selectedKey === item.AttendeeID ? "true" : undefined
-              }
-              onClick={() => setSelectedKey(item.AttendeeID)}
-              style={{ height: "40px" }}
-              className={`cursor-pointer text-xl capitalize ${
-                selectedKey === item.AttendeeID
-                  ? "table-row-selected"
-                  : "table-row-hover"
-              }`}
-            >
-              {(columnKey) => (
-                <TableCell key={columnKey} className="p-2.5 m-0 text-sm ">
-                  {columnKey === "TimeOut" ? (
-                    <button
-                      className="border-red-400 border-1 m rounded-lg cursor-pointer p-1 bg-red-200 hover:bg-red-300 fixed"
-                      style={{ marginTop: "-20px" }}
-                    >
-                      Time Out
-                    </button>
-                  ) : (
-                    item[columnKey] // Access the property directly from the item
-                  )}
-                </TableCell>
-              )}
-            </TableRow>
+  {(item) => (
+    <TableRow
+      key={item.AttendeeID}
+      data-selected={selectedKey === item.AttendeeID ? "true" : undefined}
+      onClick={() => setSelectedKey(item.AttendeeID)}
+      style={{ height: "40px" }}
+      className={`cursor-pointer text-xl capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
+    >
+      {(columnKey) => (
+        <TableCell key={columnKey} className="p-2.5 m-0 text-sm">
+          {columnKey === "TimeOut" ? (
+            item.TimeOut === '00:00:00' || item.TimeOut == null ? ( // Check if TimeOut is '00:00:00' or null
+              <button
+                className="border-red-400 border-1 m rounded-lg cursor-pointer p-1 bg-red-200 hover:bg-red-300"
+                style={{ marginTop: "-20px" }}
+                onClick={() => handleTimeout(item.AttendeeID)} // Send the current row's ID to handleTimeout
+              >
+                Time Out
+              </button>
+            ) : (
+              item.TimeOut // Display the TimeOut value if it's available
+            )
+          ) : (
+            item[columnKey] // For other columns, just display the value
           )}
-        </TableBody>
+        </TableCell>
+      )}
+    </TableRow>
+  )}
+</TableBody>
+
+
       </Table>
     </div>
   );

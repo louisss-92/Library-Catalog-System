@@ -1,11 +1,201 @@
+
+import React, { useState, useRef } from "react";
+import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image, Divider } from "@nextui-org/react";
+import axios from "axios";
 import './library.css';
-import { Card, CardHeader, Image, Divider } from "@nextui-org/react";
+import { SearchIcon } from "./SearchIcon.jsx";
+import RecommendationCard from "./RecommendationCard.jsx";
 
 function Library() {
+  const [isRegistrationOpen, setRegistrationOpen] = useState(false);
+  const [isBookOpen, setBookOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const searchInputRef = useRef(null);
+
+  const fetchBooks = async () => {
+    if (!searchQuery) return;
+
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}`
+      );
+      setSearchResults(response.data.docs || []);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleModalOpen = () => {
+    setRegistrationOpen(true);
+    setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 100);
+  };
+
+  const openBookModal = (book) => {
+    setSelectedBook(book);
+    setBookOpen(true);
+  };
+
+  const recommendations = [
+    {
+      title: "Sample Book 1",
+      author: "Sample Author 1",
+      genre: "Adventure",
+      description: "This is a sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    {
+      title: "Sample Book 2",
+      author: "Sample Author 2",
+      genre: "Horror",
+      description: "This is another sample book description.",
+      img: "prof2.jpg",
+    },
+    // Add more books here...
+  ];
+
+
   return (
     <div className="p-2">
-      <h2 className="text-xl font-semibold mb-2">Library</h2>
-      <p className="text-gray-600 mb-4">Search and browse books here.</p>
+      <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2 mr-60">Library</h1>
+
+        <Button onPress={handleModalOpen} className="min-w-96 h-10 -mt-1"> 
+          <SearchIcon size={18} />
+          Tap to search....
+        </Button>
+
+        <Modal
+          isOpen={isRegistrationOpen}
+          onOpenChange={setRegistrationOpen}
+          backdrop="opaque"
+          size="3xl"
+          scrollBehavior="inside"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader>Search for Books</ModalHeader>
+                <ModalBody>
+                  <div>
+                    {/* Search Input */}
+                    <Input
+                      ref={searchInputRef} // Attach the ref to the input field
+                      classNames={{
+                        base: "max-w-full sm:max-w-[10rem] h-10",
+                        mainWrapper: "h-full",
+                        input: "text-small",
+                        inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+                      }}
+                      placeholder="Type to search..."
+                      size="sm"
+                      startContent={<SearchIcon size={18} />}
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          fetchBooks();
+                        }
+                      }}
+                    />
+
+                    {/* Persistent Search Button */}
+                    <Button onPress={fetchBooks} className="mt-4" isLoading={loading}>
+                      Search
+                    </Button>
+
+                    {/* Search Results */}
+                    <div className="mt-4">
+                      {searchResults.length > 0 ? (
+                        searchResults.map((book) => (
+                          <Card key={book.key} className="mb-4">
+                            <CardHeader>
+                              <Image
+                                src={
+                                  book.cover_i
+                                    ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+                                    : "placeholder.jpg"
+                                }
+                                alt={book.title}
+                                width={50}
+                                height={75}
+                                className="mr-4"
+                              />
+                              <div>
+                                <h4 className="text-lg font-bold">{book.title}</h4>
+                                <p className="text-sm">{book.author_name?.join(", ")}</p>
+                              </div>
+                            </CardHeader>
+                          </Card>
+                        ))
+                      ) : (
+                        <p className="text-sm text-gray-600">No results found.</p>
+                      )}
+                    </div>
+                  </div>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </div>
 
       {/* Category Content Section */}
       <h3 className="text-lg font-semibold mb-3">Categories</h3>
@@ -28,32 +218,36 @@ function Library() {
 
       {/* Recommendations Section */}
       <h3 className="text-lg font-semibold mb-3">Recommendations</h3>
+
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {[...Array(8)].map((_, index) => ( // Change to 8 for a 4x2 grid
-          <Card key={index} className="w-full p-8 flex flex-row items-center">
-            <div className="flex justify-center">
-              <Image
-                src="prof2.jpg" // Replace with actual image URLs
-                alt="Book cover"
-                className="rounded-lg object-cover"
-                width={120} // Adjust width as needed
-                height={120} // Adjust height as needed
-              />
-            </div>
-            <div className="text-center space-y-1 mt-2 ml-[40px]">
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">Marahet si Sischan as pangit pa</h3>
-              <p className="text-xs text-gray-600">Christian ni Cantor</p>
-              <div className="flex h-5 items-center space-x-4 text-small">
-                <div>adventure</div>
-                <Divider orientation="vertical" />
-                <div>Docs</div>
-                <Divider orientation="vertical" />
-                <div>Source</div>
-              </div>
-            </div>
-          </Card>
+        {recommendations.map((book, index) => (
+          <RecommendationCard key={index} book={book} onOpen={openBookModal} />
         ))}
       </div>
+
+      <Modal
+        isOpen={isBookOpen}
+        onOpenChange={setBookOpen}
+        backdrop="opaque"
+        size="1xl"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>{selectedBook?.title}</ModalHeader>
+              <ModalBody>
+                <Image src={selectedBook?.img} alt="Book cover" className="mb-4" />
+                <p><strong>Author:</strong> {selectedBook?.author}</p>
+                <p><strong>Genre:</strong> {selectedBook?.genre}</p>
+                <p><strong>Description:</strong> {selectedBook?.description}</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button onPress={onClose}>Close</Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
