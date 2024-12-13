@@ -21,32 +21,37 @@ function Help() {
         Help, how it works
       </h1>
 
-      <div className="grid grid-cols-3 gap-4 m-20">
+      <div className="flex grid-cols-3 gap-4 m-20 " >
         {/* Buttons to open respective modals */}
         <Button
           onPress={() => setRegistrationOpen(true)}
-          className="col-span-1 p-28"
+          className="col-span-1 p-28 "
+          style={{height:"60vh"}}
         >
           Admin Help
         </Button>
         <Button
           onPress={() => setLibraryOpen(true)}
           className="col-span-2 p-28"
+          style={{height:"60vh"}}
         >
-          Library Help
+          Library Help 
         </Button>
         <Button
           onPress={() => setAccountOpen(true)}
           className="col-span-2 p-28"
+          style={{height:"60vh"}}
+
         >
           Registration Help
         </Button>
-        <Button
+        
+        {/* <Button
           onPress={() => setGeneralOpen(true)}
           className="col-span-1 p-28"
         >
           More Help
-        </Button>
+        </Button> */}
 
         {/* Registration Help Modal */}
         <Modal
