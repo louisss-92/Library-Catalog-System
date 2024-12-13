@@ -1,10 +1,10 @@
-
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image } from "@nextui-org/react";
 import axios from "axios";
 import './library.css';
 import { SearchIcon } from "./SearchIcon.jsx";
 import RecommendationCard from "./RecommendationCard.jsx";
+import RandomNumberComponent from "./RecommendRandom.jsx";
 
 function Library() {
   const [isRegistrationOpen, setRegistrationOpen] = useState(false);
@@ -13,8 +13,92 @@ function Library() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);  // State to store recommendations
 
   const searchInputRef = useRef(null);
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost/API/Catalog.php");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setItems(result); // Assuming result is an array of objects
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Update recommendations with fetched book names
+  const handleFetchBookName = (bookName) => {
+    const updatedRecommendations = [
+      {
+        title: bookName,
+        author: "Sample Author 1",
+        genre: "Adventure",
+        description: "This is a sample book description.",
+        img: "prof2.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 2",
+        genre: "Horror",
+        description: "This is another sample book description.",
+        img: "prof2.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 3",
+        genre: "Fantasy",
+        description: "This is a fantasy book description.",
+        img: "prof3.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 4",
+        genre: "Sci-Fi",
+        description: "This is a science fiction book description.",
+        img: "prof4.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 1",
+        genre: "Adventure",
+        description: "This is a sample book description.",
+        img: "prof2.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 2",
+        genre: "Horror",
+        description: "This is another sample book description.",
+        img: "prof2.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 3",
+        genre: "Fantasy",
+        description: "This is a fantasy book description.",
+        img: "prof3.jpg",
+      },
+      {
+        title: bookName,
+        author: "Sample Author 4",
+        genre: "Sci-Fi",
+        description: "This is a science fiction book description.",
+        img: "prof4.jpg",
+      }
+    ];
+
+    setRecommendations(updatedRecommendations);
+  };
 
   const fetchBooks = async () => {
     if (!searchQuery) return;
@@ -22,7 +106,7 @@ function Library() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}`
+        `http://localhost/API/Catalog.php?q=${encodeURIComponent(searchQuery)}`
       );
       setSearchResults(response.data.docs || []);
     } catch (error) {
@@ -44,73 +128,12 @@ function Library() {
     setBookOpen(true);
   };
 
-  const recommendations = [
-    {
-      title: "Sample Book 1",
-      author: "Sample Author 1",
-      genre: "Adventure",
-      description: "This is a sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    {
-      title: "Sample Book 2",
-      author: "Sample Author 2",
-      genre: "Horror",
-      description: "This is another sample book description.",
-      img: "prof2.jpg",
-    },
-    // Add more books here...
-  ];
-
-
   return (
     <div className="p-2">
       <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2 mr-60">Library</h1>
 
-        <Button onPress={handleModalOpen} className="min-w-96 h-10 -mt-1"> 
+        <Button onPress={handleModalOpen} className="min-w-96 h-10 -mt-1">
           <SearchIcon size={18} />
           Tap to search....
         </Button>
@@ -248,6 +271,9 @@ function Library() {
           )}
         </ModalContent>
       </Modal>
+
+      {/* Random Number Component to fetch the book name */}
+      <RandomNumberComponent onFetchBookName={handleFetchBookName} />
     </div>
   );
 }

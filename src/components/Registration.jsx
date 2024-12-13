@@ -176,7 +176,7 @@ const handleTimeout = async (attendeeID) => {
       setName("");
       setGender("");
       setAge("");
-      setCourse("");
+      setCourse("");  
       setYearLevel("");
       setPurpose("");
     } catch (error) {
