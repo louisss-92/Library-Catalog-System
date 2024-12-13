@@ -1,6 +1,6 @@
 
-import React, { useState, useRef } from "react";
-import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image, Divider } from "@nextui-org/react";
+import { useState, useRef } from "react";
+import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image } from "@nextui-org/react";
 import axios from "axios";
 import './library.css';
 import { SearchIcon } from "./SearchIcon.jsx";
