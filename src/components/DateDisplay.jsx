@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import { useEffect, useState } from 'react';
 
 function DateDisplay() {
   const [date, setDate] = useState("");

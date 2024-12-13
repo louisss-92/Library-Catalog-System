@@ -8,15 +8,6 @@ import About from "./components/About";
 import Help from "./components/Help";
 import AdminReg from "./components/AdminReg";
 import "./App.css";
-import { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import Body from './components/Body';
-import Library from './components/Library';
-import Registration from './components/Registration';
-import About from './components/About';
-import Help from './components/Help';
-import AdminReg from './components/AdminReg';
-import './App.css';
 
 function Main() {
   const [selectedPage, setSelectedPage] = useState("Library");
