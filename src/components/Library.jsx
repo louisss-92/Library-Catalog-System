@@ -13,91 +13,46 @@ function Library() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [items, setItems] = useState([]);
-  const [recommendations, setRecommendations] = useState([]);  // State to store recommendations
+  const [recommendations, setRecommendations] = useState([]);
 
   const searchInputRef = useRef(null);
 
-  // Fetch data from API
+  // Fetch data from API on load
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost/API/Catalog.php");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const result = await response.json();
-        setItems(result); // Assuming result is an array of objects
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    handleFetchBookName(); // Fetch initial recommendations on component mount
   }, []);
 
-  // Update recommendations with fetched book names
-  const handleFetchBookName = (bookName) => {
-    const updatedRecommendations = [
-      {
-        title: bookName,
-        author: "Sample Author 1",
-        genre: "Adventure",
-        description: "This is a sample book description.",
-        img: "prof2.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 2",
-        genre: "Horror",
-        description: "This is another sample book description.",
-        img: "prof2.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 3",
-        genre: "Fantasy",
-        description: "This is a fantasy book description.",
-        img: "prof3.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 4",
-        genre: "Sci-Fi",
-        description: "This is a science fiction book description.",
-        img: "prof4.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 1",
-        genre: "Adventure",
-        description: "This is a sample book description.",
-        img: "prof2.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 2",
-        genre: "Horror",
-        description: "This is another sample book description.",
-        img: "prof2.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 3",
-        genre: "Fantasy",
-        description: "This is a fantasy book description.",
-        img: "prof3.jpg",
-      },
-      {
-        title: bookName,
-        author: "Sample Author 4",
-        genre: "Sci-Fi",
-        description: "This is a science fiction book description.",
-        img: "prof4.jpg",
-      }
-    ];
+  // Fetch multiple random books
+  const handleFetchBookName = () => {
+    const fetchMultipleBooks = async () => {
+      const promises = Array.from({ length: 8 }, () => {
+        const randomId = Math.floor(Math.random() * 1934) + 1;
+        return fetch(`http://localhost/API/Catalog.php?CatalogID=${randomId}`)
+          .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.json();
+          })
+          .catch((error) => {
+            console.error("Error fetching book name:", error);
+            return null; // Handle failed requests gracefully
+          });
+      });
 
-    setRecommendations(updatedRecommendations);
+      const results = await Promise.all(promises);
+      const validBooks = results
+        .filter((book) => book && book["Book Name"]) // Filter out invalid results
+        .map((book, index) => ({
+          title: book["Book Name"],
+          author: `Sample Author ${index + 1}`,
+          genre: ["Adventure", "Horror", "Fantasy", "Sci-Fi"][index % 4], // Rotate genres for variety
+          description: "This is a sample book description.",
+          img: `prof${(index % 4) + 2}.jpg`, // Rotate images for variety
+        }));
+
+      setRecommendations(validBooks);
+    };
+
+    fetchMultipleBooks();
   };
 
   const fetchBooks = async () => {
@@ -151,9 +106,8 @@ function Library() {
                 <ModalHeader>Search for Books</ModalHeader>
                 <ModalBody>
                   <div>
-                    {/* Search Input */}
                     <Input
-                      ref={searchInputRef} // Attach the ref to the input field
+                      ref={searchInputRef}
                       classNames={{
                         base: "max-w-full sm:max-w-[10rem] h-10",
                         mainWrapper: "h-full",
@@ -173,12 +127,10 @@ function Library() {
                       }}
                     />
 
-                    {/* Persistent Search Button */}
                     <Button onPress={fetchBooks} className="mt-4" isLoading={loading}>
                       Search
                     </Button>
 
-                    {/* Search Results */}
                     <div className="mt-4">
                       {searchResults.length > 0 ? (
                         searchResults.map((book) => (
@@ -239,9 +191,7 @@ function Library() {
         ))}
       </div>
 
-      {/* Recommendations Section */}
       <h3 className="text-lg font-semibold mb-3">Recommendations</h3>
-
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {recommendations.map((book, index) => (
           <RecommendationCard key={index} book={book} onOpen={openBookModal} />
@@ -272,7 +222,6 @@ function Library() {
         </ModalContent>
       </Modal>
 
-      {/* Random Number Component to fetch the book name */}
       <RandomNumberComponent onFetchBookName={handleFetchBookName} />
     </div>
   );

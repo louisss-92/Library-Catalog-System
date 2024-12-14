@@ -5,34 +5,43 @@ function RandomNumberComponent({ onFetchBookName }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchBookName = (number) => {
+    setLoading(true);
+    setError(null);
+
+    fetch(`http://localhost/API/Catalog.php?CatalogID=${number}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Call the onFetchBookName function passed from the parent to set the title
+        if (onFetchBookName) {
+          onFetchBookName(data["Book Name"]);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching book name:", error);
+        setError("Failed to fetch book name");
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     // Generate the random number only once when the component mounts
     const number = Math.floor(Math.random() * 1934) + 1;
     setRandomNumber(number);
+    fetchBookName(number);
+  }, []); // Empty dependency array ensures this runs only once
 
-    // Fetch the book name using the random number
-    if (number) {
-      fetch(`http://localhost/API/Catalog.php?CatalogID=${number}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          // Call the onFetchBookName function passed from the parent to set the title
-          if (onFetchBookName) {
-            onFetchBookName(data["Book Name"]);
-          }
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching book name:", error);
-          setError("Failed to fetch book name");
-          setLoading(false);
-        });
-    }
-  }, [onFetchBookName]);
+  const handleRefresh = () => {
+    const newNumber = Math.floor(Math.random() * 1934) + 1;
+    setRandomNumber(newNumber);
+    fetchBookName(newNumber);
+  };
 
   // Handle loading and error states
   if (loading) {
@@ -43,7 +52,11 @@ function RandomNumberComponent({ onFetchBookName }) {
     return <div>{error}</div>;
   }
 
-  return null; // Parent component handles the book name display
+  return (
+    <div>
+      <button onClick={handleRefresh}>Refresh Recommendation</button>
+    </div>
+  );
 }
 
 export default RandomNumberComponent;
