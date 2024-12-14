@@ -12,7 +12,7 @@ function RandomNumberComponent({ onFetchBookName }) {
 
     // Fetch the book name using the random number
     if (number) {
-      fetch(`http://localhost/API/Catalog.php?`)
+      fetch(`http://localhost/API/Catalog.php?CatalogID=${number}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
