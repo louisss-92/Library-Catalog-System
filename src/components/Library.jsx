@@ -26,34 +26,36 @@ function Library() {
   const handleFetchBookName = () => {
     const fetchMultipleBooks = async () => {
       const promises = Array.from({ length: 8 }, () => {
-        const randomId = Math.floor(Math.random() * 1934) + 1;
+        const randomId = Math.floor(Math.random() * 1934) + 1; // Adjust range to match your CatalogID count
         return fetch(`http://localhost/API/Catalog.php?CatalogID=${randomId}`)
           .then((response) => {
             if (!response.ok) throw new Error("Network response was not ok");
             return response.json();
           })
           .catch((error) => {
-            console.error("Error fetching book name:", error);
+            console.error("Error fetching book data:", error);
             return null; // Handle failed requests gracefully
           });
       });
-
+  
       const results = await Promise.all(promises);
+  
       const validBooks = results
-        .filter((book) => book && book["Book Name"]) // Filter out invalid results
-        .map((book, index) => ({
-          title: book["Book Name"],
-          author: `Sample Author ${index + 1}`,
-          genre: ["Adventure", "Horror", "Fantasy", "Sci-Fi"][index % 4], // Rotate genres for variety
-          description: "This is a sample book description.",
-          img: `prof${(index % 4) + 2}.jpg`, // Rotate images for variety
+        .filter((book) => book && book["Book Name"]) // Ensure valid data exists
+        .map((book) => ({
+          title: book["Book Name"] || "Unknown Title",
+          author: book["AuthorName"] || "Unknown Author",
+          genre: book["Genre"] || "Uncategorized",
+          description: book["ShortDesc"] || "No description available.",
+          img: `prof${Math.floor(Math.random() * 4) + 2}.jpg`, // Rotate or replace with actual images if available
         }));
-
-      setRecommendations(validBooks);
+  
+      setRecommendations((prevRecommendations) => [...prevRecommendations, ...validBooks]);
     };
-
+  
     fetchMultipleBooks();
   };
+  
 
   const fetchBooks = async () => {
     if (!searchQuery) return;

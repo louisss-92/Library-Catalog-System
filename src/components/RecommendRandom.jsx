@@ -1,50 +1,48 @@
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
-function RandomNumberComponent({ onFetchBookName }) {
-  const [randomNumber, setRandomNumber] = useState(null);
+function RandomNumberComponent({ onFetchBookData }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchBookName = (number) => {
+  const fetchBookData = (number) => {
     setLoading(true);
     setError(null);
 
     fetch(`http://localhost/API/Catalog.php?CatalogID=${number}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
-        // Call the onFetchBookName function passed from the parent to set the title
-        if (onFetchBookName) {
-          onFetchBookName(data["Book Name"]);
+        if (onFetchBookData) {
+          // Pass all book data to the parent after mapping null to empty strings
+          const mappedData = {
+            title: data["Book Name"] || "",
+            author: data["Author"] || "",
+            genre: data["Genre"] || "",
+            description: data["Description"] || "",
+            publicationYear: data["Publication Year"] || "",
+            img: data["Image URL"] || "", // Assuming the key is "Image URL"
+          };
+          onFetchBookData(mappedData);
         }
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching book name:", error);
-        setError("Failed to fetch book name");
+        console.error("Error fetching book data:", error);
+        setError("Failed to fetch book data");
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    // Generate the random number only once when the component mounts
     const number = Math.floor(Math.random() * 1934) + 1;
-    setRandomNumber(number);
-    fetchBookName(number);
-  }, []); // Empty dependency array ensures this runs only once
+    fetchBookData(number);
+  }, []); // Run only once on mount
 
-  // const handleRefresh = () => {
-  //   const newNumber = Math.floor(Math.random() * 1934) + 1;
-  //   setRandomNumber(newNumber);
-  //   fetchBookName(newNumber);
-  // };
-
-  // Handle loading and error states
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -53,16 +51,12 @@ function RandomNumberComponent({ onFetchBookName }) {
     return <div>{error}</div>;
   }
 
-  // return (
-    // <div>
-    //   <button onClick={handleRefresh}>Refresh Recommendation</button>
-    // </div>
-  // );
+  return null; // No UI for this component as it just triggers data fetch
 }
 
 // PropTypes validation
 RandomNumberComponent.propTypes = {
-  onFetchBookName: PropTypes.func.isRequired, // Ensures a function is passed and it's required
+  onFetchBookData: PropTypes.func.isRequired, // Ensure the function is passed and required
 };
 
 export default RandomNumberComponent;
