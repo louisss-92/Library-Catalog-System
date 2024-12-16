@@ -156,7 +156,7 @@ function Registration() {
         throw new Error("Network response was not ok");
       }
 
-      const result = await response.json();
+      // const result = await response.json();
 
       onClose();
       setName("");
