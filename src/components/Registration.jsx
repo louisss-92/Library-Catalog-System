@@ -238,32 +238,32 @@ function Registration() {
               </ModalHeader>
               <ModalBody className="space-y-6">
                 {/* Date and Time Section */}
-                <div>
-                  <h2 className="text-lg font-medium mb-2">Date and Time</h2>
-                  <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-                    <DateInput
-                      label="Date"
-                      value={eventDate}
-                      onChange={setEventDate}
-                      placeholderValue={new CalendarDate(1995, 11, 6)}
-                      labelPlacement="outside"
-                      className="w-full md:w-1/2"
-                      endContent={
-                        <CalendarIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
-                    />
-                    <TimeInput
-                      label="Event Time"
-                      value={eventTime}
-                      onChange={setEventTime}
-                      labelPlacement="outside"
-                      className="w-full md:w-1/2"
-                      endContent={
-                        <ClockCircleLinearIcon className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
-                      }
-                    />
-                  </div>
-                </div>
+        <div>
+          <h2 className="text-lg font-medium mb-2">Date and Time</h2>
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <DateInput
+              label="Date"
+              value={eventDate}
+              onChange={setEventDate}
+              placeholderValue={new CalendarDate(1995, 11, 6)}
+              labelPlacement="outside"
+              className="w-full md:w-1/2"
+              endContent={
+                <CalendarIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+            />
+            <TimeInput
+              label="Event Time"
+              value={eventTime}
+              onChange={setEventTime}
+              labelPlacement="outside"
+              className="w-full md:w-1/2"
+              endContent={
+                <ClockCircleLinearIcon className="text-xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+            />
+          </div>
+        </div>
 
                 <hr
                   className="border-2 border-gray-300"
