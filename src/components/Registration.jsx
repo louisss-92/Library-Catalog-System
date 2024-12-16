@@ -132,11 +132,15 @@ function Registration() {
     }
   };
 
+  
+
   // Handle form submission
   const handleSubmit = async () => {
     const now = new Date();
     const currentTime = now.toTimeString().split(" ")[0]; // Get current time
     const currentDate = now.toISOString().split("T")[0]; // Get current date
+
+    if (!isFormValid) return;
 
     const data = {
       AttendeeID: "", // Generate or fetch a unique ID if required
@@ -177,6 +181,18 @@ function Registration() {
       console.error("Error submitting form:", error);
     }
   };
+
+  const isFormValid = useMemo(() => {
+    return (
+      name.trim() !== "" &&
+      age.trim() !== "" &&
+      gender.trim() !== "" &&
+      yearLevel.trim() !== "" &&
+      course.trim() !== "" &&
+      purpose.trim() !== ""
+    );
+  }, [name, age, gender, yearLevel, course, purpose]);
+  
 
   return (
     <div className="p-2">
@@ -356,9 +372,15 @@ function Registration() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Cancel
                 </Button>
-                <Button color="primary" onPress={handleSubmit}>
+                <Button
+                  color="primary"
+                  onPress={handleSubmit}
+                  disabled={!isFormValid} // Tied to form validation
+                  className={!isFormValid ? "opacity-50 cursor-not-allowed" : ""} // Optional: Add styling for disabled state
+                >
                   Save
                 </Button>
+
               </ModalFooter>
             </>
           </ModalContent>
