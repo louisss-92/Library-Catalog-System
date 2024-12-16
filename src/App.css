@@ -53,6 +53,19 @@
     border-radius: 15px;
     margin-left: 50px;
   }
+
+  /* Sidebar general button styles */
+
+
+/* Highlighting the active button */
+.functions.active {
+  
+  color: #ffc683; /* Optional: Set contrasting text color */
+  font-weight: bold; /* Optional: Make the text bold */
+}
+
+
+
   
   .sidebar.collapsed .buttons .functions {
     justify-content: center;
