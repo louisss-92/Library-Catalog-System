@@ -88,6 +88,13 @@ function Registration() {
   const handleOpen = (backdrop) => {
     setBackdrop(backdrop);
     onOpen(); // Open the modal
+    const now = new Date();
+
+    setEventDate(new CalendarDate(now.getFullYear(), now.getMonth() + 1, now.getDate()));
+  setEventTime(new Time(now.getHours(), now.getMinutes()));
+
+  setBackdrop(backdrop);
+  onOpen(); // Open the modal
   };
 
   // Handle timeout submission
