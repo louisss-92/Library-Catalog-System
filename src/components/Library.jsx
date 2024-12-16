@@ -26,7 +26,7 @@ function Library() {
   const handleFetchBookName = () => {
     const fetchMultipleBooks = async () => {
       const promises = Array.from({ length: 4 }, () => {
-        const randomId = Math.floor(Math.random() * 1934) + 1; // Adjust range to match your CatalogID count
+        const randomId = Math.floor(Math.random() * 24) + 1; // Adjust range later again to 1934 + 1
         return fetch(`http://localhost/API/Catalog.php?CatalogID=${randomId}`)
           .then((response) => {
             if (!response.ok) throw new Error("Network response was not ok");
