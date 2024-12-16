@@ -6,7 +6,7 @@ import { Tooltip } from "@nextui-org/react";
 
 function About() {
   return (
-    <div className='main-content' style={{width:"1140px"}}>
+    <div className='main-content' style={{width:"1140px", marginLeft:"30px"}}>
       <div className='upper'>
         <div className='titles'>
           <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2">
