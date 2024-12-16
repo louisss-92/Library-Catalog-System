@@ -25,7 +25,7 @@ function Library() {
   // Fetch multiple random books
   const handleFetchBookName = () => {
     const fetchMultipleBooks = async () => {
-      const promises = Array.from({ length: 8 }, () => {
+      const promises = Array.from({ length: 4 }, () => {
         const randomId = Math.floor(Math.random() * 1934) + 1; // Adjust range to match your CatalogID count
         return fetch(`http://localhost/API/Catalog.php?CatalogID=${randomId}`)
           .then((response) => {
