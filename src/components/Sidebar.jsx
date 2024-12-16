@@ -48,19 +48,7 @@ function Sidebar({ onSelectPage }) {
   };
   return (
     <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-      <button onClick={toggleSidebar} className="collapse-btn">
-        {collapsed ? (
-          <IconLayoutSidebarRightCollapse
-            className="toggle-icon"
-            color="#ffc683"
-          />
-        ) : (
-          <IconLayoutSidebarLeftCollapse
-            className="toggle-icon"
-            color="#ffc683"
-          />
-        )}
-      </button>
+      
 
       {!collapsed && (
         <div className="library-logo">
