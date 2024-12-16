@@ -39,7 +39,7 @@ function About() {
           <img src="ischan.jpeg" alt="" className='profile'/>
           <h4 className="scroll-m-20 text-lg font-semibold tracking-tight mt-2">Christian Cantor</h4>
           <p className="text-sm text-muted-foreground">Backend Developer </p>
-          <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">Lorem ipsum creating innovative solutions creating innovative solutions</blockquote>
+          <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">"when doubt clouds your mind and fear blurs your path, focus on just taking the next step."</blockquote>
           <div className='socials'>
             
           <Tooltip showArrow={true} placement='bottom' content="Christian Cantor"  >
@@ -108,7 +108,7 @@ function About() {
           <img src="../../public/mar1.jpg" alt="" className='profile'/>
           <h4 className="scroll-m-20 text-lg font-semibold tracking-tight mt-2">Jean Marianne Elica</h4>
           <p className="text-xs text-muted-foreground">Frontend Developer / Designer</p>
-          <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">Lorem ipsum creating innovative solutions creating innovative solutions</blockquote>
+          <blockquote className="mt-4 border-l-2 pl-2 italic text-sm mb-8">"i'm not avoiding it beacuse it's wrong for them, i'm avoiding it because it's not right for me yet."</blockquote>
           <div className='socials'>
           <Tooltip showArrow={true} placement='bottom' content="Jean Marianne Elica" style={{fontSize:"10px"}}>
               <a href="https://www.facebook.com/jeanmarianne.elica.9">
