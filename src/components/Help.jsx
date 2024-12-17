@@ -17,23 +17,23 @@ function Help() {
 
   return (
     <div>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl ml-20 mt-10">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl ml-20 mt-10 -mb-7">
         Help, how it works
       </h1>
 
-      <div className="flex grid-cols-3 gap-10 m-20 " >
+      <div className="flex grid-cols-3 gap-10 m-20" >
         {/* Buttons to open respective modals */}
         <Button
           onPress={() => setRegistrationOpen(true)}
           className="col-span-1 p-32 "
-          style={{height:"60vh"}}
+          style={{height:"60vh", backgroundColor:"#ffc683"}}
         >
           Admin Help
         </Button>
         <Button
           onPress={() => setLibraryOpen(true)}
-          className="col-span-2 p-32"
-          style={{height:"60vh"}}
+          className="col-span-2 p-32 "
+          style={{height:"60vh", backgroundColor:"#57429D"}}
         >
           Library Help 
         </Button>
