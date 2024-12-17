@@ -182,7 +182,7 @@ function Library() {
         {["Adventure", "Horror", "Comedy", "Drama"].map((genre, index) => (
           <Card key={index} className="w-full h-[180px] relative">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-              <p className="text-xs text-white/60 uppercase font-bold">What to watch</p>
+              <p className="text-xs text-white/60 uppercase font-bold">What to read</p>
               <h4 className="text-white font-medium text-sm">{genre}</h4>
             </CardHeader>
             <Image
