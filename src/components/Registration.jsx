@@ -413,7 +413,7 @@ function Registration() {
           </div>
         }
         classNames={{
-          wrapper: "h-[621px]",
+          wrapper: "h-[593px]",
         }}
       >
         <TableHeader>
