@@ -189,7 +189,7 @@ function Library() {
               removeWrapper
               alt={`${genre} genre`}
               className="z-0 w-full h-full object-cover"
-              src="prof2.jpg" // Replace with actual image URLs
+              src="book-bg.jpg" // Replace with actual image URLs
             />
           </Card>
         ))}
