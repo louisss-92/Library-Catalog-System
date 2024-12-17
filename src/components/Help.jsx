@@ -32,7 +32,7 @@ function Help() {
         </Button>
         <Button
           onPress={() => setLibraryOpen(true)}
-          className="col-span-2 p-32"
+          className="col-span-2 p-32 "
           style={{height:"32.15rem"}}
         >
           Library Help 
