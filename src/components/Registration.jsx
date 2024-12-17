@@ -460,7 +460,7 @@ function Registration() {
       data-selected={selectedKey === item.AttendeeID ? "true" : undefined}
       onClick={() => setSelectedKey(item.AttendeeID)}
       style={{ height: "40px" }}
-      className={`cursor-pointer text-xl capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
+      className={`cursor-pointer text-xxs capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
     >
       {(columnKey) => (
         <TableCell key={columnKey} className="p-2.5 m-0 text-sm">
