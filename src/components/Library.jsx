@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Card, CardHeader, Image } from "@nextui-org/react";
 import axios from "axios";
 import './library.css';
+import { IconSearch } from '@tabler/icons-react';
 import { SearchIcon } from "./SearchIcon.jsx";
 import RecommendationCard from "./RecommendationCard.jsx";
 import RandomNumberComponent from "./RecommendRandom.jsx";
@@ -25,7 +26,7 @@ function Library() {
   // Fetch multiple random books
   const handleFetchBookName = () => {
     const fetchMultipleBooks = async () => {
-      const promises = Array.from({ length: 4 }, () => {
+      const promises = Array.from({ length:4 }, () => {
         const randomId = Math.floor(Math.random() * 24) + 1; // Adjust range later again to 1934 + 1
         return fetch(`http://localhost/API/Catalog.php?CatalogID=${randomId}`)
           .then((response) => {
@@ -92,7 +93,7 @@ function Library() {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-6xl mb-2 mr-60">Library</h1>
 
         <Button onPress={handleModalOpen} className="min-w-96 h-10 -mt-1">
-          <SearchIcon size={18} />
+          < IconSearch />
           Tap to search....
         </Button>
 
@@ -119,7 +120,7 @@ function Library() {
                       }}
                       placeholder="Type to search..."
                       size="sm"
-                      startContent={<SearchIcon size={18} />}
+                      startContent={< IconSearch size={18} />}
                       type="search"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
