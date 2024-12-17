@@ -26,21 +26,21 @@ function Help() {
         <Button
           onPress={() => setRegistrationOpen(true)}
           className="col-span-1 p-32 "
-          style={{height:"60vh"}}
+          style={{height:"32.15rem"}}
         >
           Admin Help
         </Button>
         <Button
           onPress={() => setLibraryOpen(true)}
           className="col-span-2 p-32"
-          style={{height:"60vh"}}
+          style={{height:"32.15rem"}}
         >
           Library Help 
         </Button>
         <Button
           onPress={() => setAccountOpen(true)}
           className="col-span-2 p-32"
-          style={{height:"60vh"}}
+          style={{height:"32.15rem"}}
 
         >
           Registration Help

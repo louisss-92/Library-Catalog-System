@@ -20,11 +20,11 @@ const RecommendationCard = ({ book, onOpen }) => {
         <h3 className="text-sm font-semibold text-gray-900 mb-2">{book.title}</h3>
         <p className="text-xs text-gray-600">{book.author}</p>
         <div className="flex h-5 items-center space-x-4 text-small">
+          <Divider orientation="vertical" />
           <div>{book.genre}</div>
           <Divider orientation="vertical" />
-          <div>Docs</div>
-          <Divider orientation="vertical" />
-          <div>Source</div>
+          {/* <div>Docs</div>
+          <div>Source</div> */}
         </div>
       </div>
     </Button>
