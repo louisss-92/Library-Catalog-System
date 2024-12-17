@@ -59,19 +59,20 @@ function Library() {
 
   const fetchBooks = async () => {
     if (!searchQuery) return;
-
+  
     setLoading(true);
     try {
       const response = await axios.get(
         `http://localhost/API/Catalog.php?q=${encodeURIComponent(searchQuery)}`
       );
-      setSearchResults(response.data.docs || []);
+      setSearchResults(response.data || []);
     } catch (error) {
       console.error("Error fetching books:", error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleModalOpen = () => {
     setRegistrationOpen(true);
