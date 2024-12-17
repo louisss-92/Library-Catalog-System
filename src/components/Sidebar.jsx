@@ -265,12 +265,12 @@ function Sidebar({ onSelectPage }) {
           </ModalContent>
         </Modal>
 
-        <Button
+        {/* <Button
           onPress={() => onSelectPage("AdminReg")}
           className="functions"
         >
           temp admin btn
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
