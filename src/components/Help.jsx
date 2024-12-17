@@ -26,7 +26,7 @@ function Help() {
         <Button
           onPress={() => setRegistrationOpen(true)}
           className="col-span-1 p-32 "
-          style={{height:"32.15rem"}}
+          style={{height:"32.15rem",}}
         >
           Admin Help
         </Button>
@@ -40,7 +40,7 @@ function Help() {
         <Button
           onPress={() => setAccountOpen(true)}
           className="col-span-2 p-32"
-          style={{height:"32.15rem"}}
+          style={{height:"32.15rem", backgroundColor:'#ffc683'}}
 
         >
           Registration Help

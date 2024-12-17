@@ -16,10 +16,10 @@ const RecommendationCard = ({ book, onOpen }) => {
           height={120}
         />
       </div>
-      <div className="text-center space-y-1 mt-2 ml-[40px]">
-        <h3 className="text-sm font-semibold text-gray-900 mb-2">{book.title}</h3>
+      <div className="text-center space-y-1 mt-2 ml-[2rem] " style={{textAlign:'center'}}>
+        <h3 className="font-semibold text-gray-900 mb-2" style={{fontSize:'0.75rem', textWrap:'balance', width:'7rem'}}>{book.title}</h3>
         <p className="text-xs text-gray-600">{book.author}</p>
-        <div className="flex h-5 items-center space-x-4 text-small">
+        <div style={{textAlign:'center', width:'7rem'}} className="flex h-5 items-center space-x-4 text-small">
           <Divider orientation="vertical" />
           <div>{book.genre}</div>
           <Divider orientation="vertical" />

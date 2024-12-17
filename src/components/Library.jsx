@@ -3,7 +3,7 @@ import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter
 import axios from "axios";
 import './library.css';
 import { IconSearch } from '@tabler/icons-react';
-import { SearchIcon } from "./SearchIcon.jsx";
+// import { SearchIcon } from "./SearchIcon.jsx";
 import RecommendationCard from "./RecommendationCard.jsx";
 import RandomNumberComponent from "./RecommendRandom.jsx";
 
@@ -182,14 +182,14 @@ function Library() {
         {["Adventure", "Horror", "Comedy", "Drama"].map((genre, index) => (
           <Card key={index} className="w-full h-[180px] relative">
             <CardHeader className="absolute z-10 top-1 flex-col !items-start">
-              <p className="text-xs text-white/60 uppercase font-bold">What to watch</p>
+              <p className="text-xs text-white/60 uppercase font-bold">What to read</p>
               <h4 className="text-white font-medium text-sm">{genre}</h4>
             </CardHeader>
             <Image
               removeWrapper
               alt={`${genre} genre`}
               className="z-0 w-full h-full object-cover"
-              src="prof2.jpg" // Replace with actual image URLs
+              src="book-bg.jpg" // Replace with actual image URLs
             />
           </Card>
         ))}
