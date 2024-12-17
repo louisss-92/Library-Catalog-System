@@ -34,7 +34,7 @@ function Registration() {
   const [items, setItems] = useState([]); // Stores the list of attendees
   const [selectedKey, setSelectedKey] = useState(null); // Tracks the selected row
   const [page, setPage] = useState(1); // Current page for pagination
-  const rowsPerPage = 10; // Set rows per page
+  const rowsPerPage = 8; // Set rows per page
   const pages = Math.ceil(items.length / rowsPerPage); // Calculate total pages
 
   // State for modal form inputs
@@ -460,7 +460,7 @@ function Registration() {
       data-selected={selectedKey === item.AttendeeID ? "true" : undefined}
       onClick={() => setSelectedKey(item.AttendeeID)}
       style={{ height: "40px" }}
-      className={`cursor-pointer text-xl capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
+      className={`cursor-pointer text-xxs capitalize ${selectedKey === item.AttendeeID ? "table-row-selected" : "table-row-hover"}`}
     >
       {(columnKey) => (
         <TableCell key={columnKey} className="p-2.5 m-0 text-sm">
