@@ -21,7 +21,7 @@ function Help() {
         Help, how it works
       </h1>
 
-      <div className="flex grid-cols-3 gap-6 m-20 " >
+      <div className="flex grid-cols-3 gap-10 m-20 " >
         {/* Buttons to open respective modals */}
         <Button
           onPress={() => setRegistrationOpen(true)}
