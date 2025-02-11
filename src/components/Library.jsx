@@ -107,7 +107,7 @@ function Library() {
           <ModalContent>
             {(onClose) => (
               <>
-                <ModalHeader>Search for Books</ModalHeader>
+                <ModalHeader>Search of Books</ModalHeader>
                 <ModalBody>
                   <div>
                     <Input
